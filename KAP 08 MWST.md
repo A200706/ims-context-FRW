@@ -181,8 +181,37 @@
 
 ---
 
-## 9) BEISPIELE AUS DEN AUFGABEN
 
-### Beispiel 1: MWST-Berechnung
-**Frage:** „Berechnen Sie die MWST für einen Betrag von CHF 1000.“
-**Antwort:**
+---
+
+## 9) FEHLERFALLEN
+- Verwechslung von Vorsteuer und Umsatzsteuer.
+- Falsche Anwendung der Steuersätze.
+- Fehlende Angaben auf Belegen.
+- Falsche Berechnung der abzuliefernden MWST.
+- Nichtbeachtung von Rabatten, Skonti und Rücksendungen.
+
+---
+
+## 10) MINI-CHECKLISTE
+- Steuersubjekt und Steuerobjekt korrekt identifiziert?
+- Richtiger Steuersatz angewendet?
+- Vorsteuerabzug korrekt berechnet?
+- Beleg enthält alle Pflichtangaben?
+- Buchungssätze korrekt?
+- MWST-Abrechnung quartalsweise bzw. halbjährlich (bei Saldosteuersatzmethode) durchgeführt?
+- Rabatte, Skonti und Rücksendungen berücksichtigt?
+
+---
+
+## 11) ZUSAMMENFASSUNG DER WICHTIGSTEN PUNKTE
+- MWST ist eine Allphasen- und Verbrauchsteuer.
+- Steuersubjekte sind Unternehmen mit entsprechendem Umsatz.
+- Steuerobjekte sind Lieferungen, Dienstleistungen und Importe.
+- Drei Steuersätze: 8.1%, 2.6%, 3.8%.
+- Vorsteuer kann abgezogen werden, Umsatzsteuer muss abgeführt werden.
+- MWST-konforme Belege müssen bestimmte Pflichtangaben enthalten.
+- Nettomethode und Saldosteuersatzmethode sind die beiden Abrechnungsmethoden.
+- Rabatte, Skonti und Rücksendungen beeinflussen die MWST.
+
+---
