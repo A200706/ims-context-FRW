@@ -1,217 +1,112 @@
-  # FRW_K08_MWST.md
-> Zweck: Schnell-Context für AI. Kapitel 8 aus dem Upload: Mehrwertsteuer (MWST) Theorie und Aufgaben.
-> Stil: kurz, prüfungsnah, einfache Wörter (A2–B1), **Antwort-Only**.
+# FRW MWST MASTER CONTEXT (Schweiz - Kapitel 8)
+
+[[SYSTEM_CONFIG]]
+- **Currency:** CHF (Schweizer Franken).
+- **Rounding:** 0.05 (5 Rappen).
+- **Language:** Deutsch (Exam-Style, A2-B1 Level).
+- **Date Format:** DD.MM.YYYY.
 
 ---
 
-## 0) OUTPUT MODE (STRICT)
+## 1. STEUERSÄTZE & OBJEKTE (Die Hard-Facts)
 
-### 0.1 Antwort-Regel (immer)
-- **Kein Intro. Keine langen Erklärungen.**
-- Starte immer so:
-  - `Aufgabe {Nr}: {Kurzname}`
-- Dann **nur** das, was man in die Lösung schreibt: Zahl/Einheit, evtl. 1 Formelzeile.
+### [cite_start]1.1 Aktuelle Sätze (Stand 2024/PDF) [cite: 109]
+| Satz | Name | Gilt für (Beispiele) |
+| :--- | :--- | :--- |
+| **8.1%** | **Normalsatz** | Alle übrigen Lieferungen/Dienstleistungen (Autos, Möbel, Beratung, Strom, Benzin, Alkohol/Gastro). |
+| **2.6%** | **Reduzierter Satz** | Nahrungsmittel (Essen/Trinken ohne Gastro), Medikamente, Zeitungen, Bücher, Leitungswasser, Pflanzen, Dünger. |
+| **3.8%** | **Sondersatz** | Beherbergung (Hotellerie: Übernachtung + Frühstück). |
+| **0.0%** | **Steuerbefreit** | Exporte (Ausfuhr). **WICHTIG:** Vorsteuerabzug ist ERLAUBT! |
+| **0.0%** | **Ausgenommen** | Banken, Versicherungen, Immobilienverkauf, Ärzte, Bildung. **WICHTIG:** Vorsteuerabzug ist VERBOTEN! |
 
-### 0.2 Rechner-Format
-- Beträge in `CHF`
-- Prozentsätze mit `%`
-- Steuersätze als Dezimalzahlen (z.B., `8.1%`)
-
-### 0.3 "Wo schreibe ich das hin?"
-- Wenn die Aufgabe **eine Zeile** hat: nur `Ergebnis: ...`
-- Wenn die Aufgabe **Felder** hat (z.B. „MWST-Betrag:“): schreibe das Ergebnis **direkt hinter das Feld**.
-- Wenn die Aufgabe **Tabelle** hat: schreibe den Wert **in die passende Spalte** (Netto/Brutto/%).
-
-### 0.4 Mini-Format-Bausteine (nur wenn nötig)
-- `Gegeben: ...`
-- `Gesucht: ...`
-- `Formel: ...`
-- `Rechnung: ...`
-- `Ergebnis: ...`
+### [cite_start]1.2 Begriffe [cite: 19, 20, 35, 38]
+- **Umsatzsteuer:** Schuld gegenüber ESTV (auf Verkäufen).
+- **Vorsteuer:** Guthaben gegenüber ESTV (auf Einkäufen).
+- **Steuersubjekt:** Das Unternehmen (muss abrechnen).
+- **Steuerobjekt:** Die Leistung (wird besteuert).
 
 ---
 
-## 1) RESPONSE TYPES (Index)
+## [cite_start]2. KONTEN-LOGIK (Nettomethode) [cite: 245, 246, 252, 253]
+**CRITICAL:** Du musst das richtige Vorsteuer-Konto wählen!
 
-### RT-K08-1: MWST-Betrag berechnen
-**Typ-Frage:** „Berechnen Sie die MWST für einen Betrag von CHF X.“ oder „Wie hoch ist die MWST für CHF X?“
-**Output:**
-- `Aufgabe {Nr}: MWST-Betrag`
-- `MWST = Betrag * Steuersatz`
-- `Ergebnis: MWST = ... CHF`
-
-### RT-K08-2: Bruttobetrag berechnen
-**Typ-Frage:** „Wie hoch ist der Bruttobetrag inkl. MWST?“
-**Output:**
-- `Aufgabe {Nr}: Bruttobetrag`
-- `Bruttobetrag = Nettobetrag * (1 + Steuersatz)`
-- `Ergebnis: Bruttobetrag = ... CHF`
-
-### RT-K08-3: Nettobetrag berechnen
-**Typ-Frage:** „Wie hoch ist der Nettobetrag exkl. MWST?“
-**Output:**
-- `Aufgabe {Nr}: Nettobetrag`
-- `Nettobetrag = Bruttobetrag / (1 + Steuersatz)`
-- `Ergebnis: Nettobetrag = ... CHF`
-
-### RT-K08-4: Vorsteuerabzug
-**Typ-Frage:** „Wie hoch ist der Vorsteuerabzug?“
-**Output:**
-- `Aufgabe {Nr}: Vorsteuerabzug`
-- `Vorsteuer = Eingangsrechnung * Steuersatz`
-- `Ergebnis: Vorsteuer = ... CHF`
-
-### RT-K08-5: MWST-Abrechnung
-**Typ-Frage:** „Berechnen Sie die abzuliefernde MWST.“
-**Output:**
-- `Aufgabe {Nr}: MWST-Abrechnung`
-- `Abzuliefernde MWST = Umsatzsteuer - Vorsteuer`
-- `Ergebnis: Abzuliefernde MWST = ... CHF`
-
-### RT-K08-6: Steuersatz bestimmen
-**Typ-Frage:** „Welcher Steuersatz gilt für ...?“
-**Output:**
-- `Aufgabe {Nr}: Steuersatz`
-- `Steuersatz = ... %`
-- `Ergebnis: ... %`
-
-### RT-K08-7: MWST-konformer Beleg
-**Typ-Frage:** „Ist dieser Beleg MWST-konform? Fehlende Elemente?“
-**Output:**
-- `Aufgabe {Nr}: MWST-konformer Beleg`
-- `Fehlende Elemente: Name und Adresse des Leistenden, MWST-Nummer, Datum der Leistung, Art und Umfang der Leistung, Entgelt für die Leistung, Steuersatz und Steuerbetrag`
-- `Ergebnis: Fehlende Elemente: ...`
+| Konto | Name | Verwendung (Regel) | Beispiele |
+| :--- | :--- | :--- | :--- |
+| **1170** | Vorsteuer Material/Waren | Alles, was **Klasse 4** (Aufwand für Produktion/Handel) betrifft. | Holz (Schreiner), Handelswaren, Rohstoffe, Energie für Produktion. |
+| **1171** | Vorsteuer Invest/Übriges | Alles, was **Klasse 1** (Investitionen) oder **Klasse 6** (Übriger Aufwand) betrifft. | Maschinen, Fahrzeuge, Büromaterial, Werbung, Beratung, Benzin für Firmenwagen. |
+| **2200** | Umsatzsteuer (Passiv) | Geschuldete Steuer auf Verkäufen (Klasse 3). | Verkauf von Produkten, Dienstleistungen, Verkauf von Anlagevermögen. |
 
 ---
 
-## 2) KAPITEL 8.1 & 8.2 MWST-GRUNDLAGEN (Kern)
+## 3. BUCHUNGS-TEMPLATES (Nettomethode)
 
-### 2.1 Grundbegriffe (immer kennen)
-- **Steuersubjekt**: Unternehmen, die MWST abrechnen müssen.
-- **Steuerobjekt**: Steuerpflichtige Umsätze (Lieferungen und Dienstleistungen).
-- **Vorsteuer**: MWST auf Einkäufen (kann zurückgefordert werden).
-- **Umsatzsteuer**: MWST auf Verkäufen (muss an ESTV abgeführt werden).
+### [cite_start]3.1 Einkauf (Rechnung erhalten) [cite: 198, 200, 201]
+*Beispiel: Kauf Rohmaterial CHF 2'162 (inkl. 8.1%) auf Kredit.*
+1. **Nettobetrag:** `Materialaufwand / VLL` : 2'000.00
+2. **Vorsteuer:** `Vorsteuer 1170 / VLL` : 162.00
 
-### 2.2 Steuersätze
-- **Normalsatz**: `8.1%`
-- **Reduzierter Satz**: `2.6%` (z.B. Nahrungsmittel, Medikamente)
-- **Sondersatz**: `3.8%` (z.B. Hotellerie für Übernachtung und Frühstück)
-- **Von der Steuer befreit**: Exporte (Vorsteuerabzug erlaubt)
-- **Von der Steuer ausgenommen**: z.B. Versicherungen, Geld- und Kapitalverkehr (kein Vorsteuerabzug erlaubt)
+### [cite_start]3.2 Verkauf (Rechnung gestellt) [cite: 282, 286, 291]
+*Beispiel: Verkauf Möbel CHF 4'324 (inkl. 8.1%) auf Kredit.*
+1. **Nettobetrag:** `FLL / Produktionserlöse` : 4'000.00
+2. **Umsatzsteuer:** `FLL / Umsatzsteuer` : 324.00
 
-### 2.3 Standard-Formeln (High ROI)
-- `MWST = Nettobetrag * Steuersatz`
-- `Bruttobetrag = Nettobetrag * (1 + Steuersatz)`
-- `Nettobetrag = Bruttobetrag / (1 + Steuersatz)`
+### [cite_start]3.3 Rabatte / Skonto / Rücksendungen [cite: 330, 367]
+*Regel:* Buche genau **umgekehrt** zur Originalbuchung (Storno).
+*Beispiel: Wir zahlen Einkauf unter Abzug von Skonto.*
+1. **Nettoskonto:** `VLL / Materialaufwand`
+2. **Steuerskonto:** `VLL / Vorsteuer 1170`
+3. **Zahlung:** `VLL / Bank` (Restbetrag)
 
----
-
-## 3) TYPISCHE AUFGABENMUSTER
-
-### 3.1 MWST-Berechnung
-**Muster A: „Berechnen Sie die MWST für CHF X.“**
-- RT-K08-1
-
-**Muster B: „Wie hoch ist der Bruttobetrag?“
-- RT-K08-2
-
-**Muster C: „Wie hoch ist der Nettobetrag?“
-- RT-K08-3
-
-### 3.2 Vorsteuer und Umsatzsteuer
-**Muster D: „Berechnen Sie die Vorsteuer.“**
-- RT-K08-4
-
-**Muster E: „Berechnen Sie die abzuliefernde MWST.“**
-- RT-K08-5
+### [cite_start]3.4 Abrechnung ESTV (Quartalsende) [cite: 302, 311]
+*Ziel: Vorsteuerkonten auf 0 setzen und Differenz zahlen.*
+1. `Umsatzsteuer / Vorsteuer 1170` (Saldo 1170 ausbuchen)
+2. `Umsatzsteuer / Vorsteuer 1171` (Saldo 1171 ausbuchen)
+3. `Umsatzsteuer / Bank` (Restschuld überweisen)
 
 ---
 
-## 4) MWST-KONFORME BELEGE
+## [cite_start]4. SALDOSTEUERSATZ-METHODE (SSS) [cite: 370, 372, 382]
 
-### 4.1 Pflichtangaben
-- Name und Adresse des Leistenden
-- MWST-Nummer des Leistenden
-- Name und Adresse des Empfängers
-- Datum der Leistung
-- Art und Umfang der Leistung
-- Entgelt für die Leistung
-- Steuersatz und Steuerbetrag
+### 4.1 Die Regeln
+- **Kein Vorsteuerabzug!** (Weder Konto 1170 noch 1171 führen).
+- **Abrechnung:** 2x pro Jahr (Semester).
+- [cite_start]**Buchung:** Unter dem Jahr immer **BRUTTO** (inkl. MWST) in den Ertrag buchen[cite: 393].
 
----
+### [cite_start]4.2 Die Branchen-Liste (SSS-Sätze) [cite: 382]
+*Wenn die Aufgabe eine Branche nennt, nimm BLIND diesen Satz:*
+- **0.1%**: Futtermittel, Kiosk, Zeitungen.
+- **0.6%**: **Bäckerei**, **Buchhandlung**, Heizöl, Weinhandel.
+- **1.3%**: (Selten in Aufgaben).
+- **2.1% - 3.7%**: Bau, Schreiner, Handwerker.
+- **5.3%**: **Tearoom**, **Coiffeur**, Hundesalon, Fotostudio, Fitness.
+- **6.2%**: **Treuhand**, **Anwälte**, Architekten, Übersetzer (Dienstleister).
+- **6.8%**: Personalverleih.
 
-## 5) BUCHUNG DER MWST (NETTOMETHODE)
-
-### 5.1 Konten
-- **Vorsteuer 1170**: Vorsteuer aus Material, Waren, Dienstleistungen
-- **Vorsteuer 1171**: Vorsteuer aus Investitionen und übrigem Betriebsaufwand
-- **Umsatzsteuer**: Umsatzsteuer aus Verkäufen
-
-### 5.2 Buchungssätze
-- **Einkauf**: `Materialaufwand / Vorsteuer 1170`
-- **Verkauf**: `Forderungen aus LL / Umsatzsteuer`
+### [cite_start]4.3 SSS-Berechnung & Buchung [cite: 404, 408]
+1. **Steuerschuld:** `Brutto-Semesterumsatz * SSS-Satz / 100`
+2. **Buchung (Semesterende):** `Ertrag / Umsatzsteuer` (Nur der berechnete Betrag!)
+3. **Zahlung:** `Umsatzsteuer / Bank`
 
 ---
 
-## 6) SALDOSTEUERSATZMETHODE
+## [cite_start]5. RECHEN-FORMELN (Der Spickzettel) [cite: 166, 188]
 
-### 6.1 Anwendung
-- Für Unternehmen mit Jahresumsatz bis CHF 5,024,000
-- Abrechnung halbjährlich
+### 5.1 Von "Inklusive" (Brutto) rechnen
+*Der Preis ist 100% + Satz (z.B. 108.1%).*
+- **Netto suchen:** `Brutto / 1.081`
+- **Steuer suchen:** `Brutto / 108.1 * 8.1`
 
-### 6.2 Berechnung
-- `MWST-Schuld = (Steuerbarer Gesamtumsatz * Saldosteuersatz) / 100`
-
----
-
-## 7) FEHLERFALLEN
-- Verwechslung von Vorsteuer und Umsatzsteuer.
-- Falsche Anwendung der Steuersätze.
-- Fehlende Angaben auf Belegen.
-- Falsche Berechnung der abzuliefernden MWST.
+### 5.2 Von "Exklusive" (Netto) rechnen
+*Der Preis ist 100%.*
+- **Brutto suchen:** `Netto * 1.081`
+- **Steuer suchen:** `Netto * 0.081`
 
 ---
 
-## 8) MINI-CHECKLISTE
-- Steuersubjekt und Steuerobjekt korrekt identifiziert?
-- Richtiger Steuersatz angewendet?
-- Vorsteuerabzug korrekt berechnet?
-- Beleg enthält alle Pflichtangaben?
-- Buchungssätze korrekt?
-
----
-
-
----
-
-## 9) FEHLERFALLEN
-- Verwechslung von Vorsteuer und Umsatzsteuer.
-- Falsche Anwendung der Steuersätze.
-- Fehlende Angaben auf Belegen.
-- Falsche Berechnung der abzuliefernden MWST.
-- Nichtbeachtung von Rabatten, Skonti und Rücksendungen.
-
----
-
-## 10) MINI-CHECKLISTE
-- Steuersubjekt und Steuerobjekt korrekt identifiziert?
-- Richtiger Steuersatz angewendet?
-- Vorsteuerabzug korrekt berechnet?
-- Beleg enthält alle Pflichtangaben?
-- Buchungssätze korrekt?
-- MWST-Abrechnung quartalsweise bzw. halbjährlich (bei Saldosteuersatzmethode) durchgeführt?
-- Rabatte, Skonti und Rücksendungen berücksichtigt?
-
----
-
-## 11) ZUSAMMENFASSUNG DER WICHTIGSTEN PUNKTE
-- MWST ist eine Allphasen- und Verbrauchsteuer.
-- Steuersubjekte sind Unternehmen mit entsprechendem Umsatz.
-- Steuerobjekte sind Lieferungen, Dienstleistungen und Importe.
-- Drei Steuersätze: 8.1%, 2.6%, 3.8%.
-- Vorsteuer kann abgezogen werden, Umsatzsteuer muss abgeführt werden.
-- MWST-konforme Belege müssen bestimmte Pflichtangaben enthalten.
-- Nettomethode und Saldosteuersatzmethode sind die beiden Abrechnungsmethoden.
-- Rabatte, Skonti und Rücksendungen beeinflussen die MWST.
-
----
+## [cite_start]6. BELEG-CHECKLISTE (Muss drauf sein) [cite: 144, 145, 146, 147, 148, 149]
+1. **Wer leistet?** (Name, Ort, **MWST-Nr.**).
+2. [cite_start]**Wer empfängt?** (Name, Ort) -> Ausnahme: Kassenzettel < 400 CHF[cite: 178].
+3. **Wann?** (Datum/Zeitraum).
+4. **Was?** (Art/Menge).
+5. **Wieviel?** (Betrag).
+6. **Steuer?** (Satz in % und Betrag, oder Vermerk "inkl. X% MWST").
