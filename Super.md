@@ -1,424 +1,554 @@
-# SUPER-MD — FRW KAP 4 + KAP 11 (Mehrwertsteuer + Offenposten-Buchhaltung)
+# SUPER-MD — FRW PRÜFUNG (Kap 4: MWST + Kap 11: Offenposten)
+# Buchhaltung: Mehrwertsteuer & Offenposten-Methode (LaTeX-SAFE)
 
 ---
 
-## QR — QUICK ROUTER
+## 0) Output-Style (LaTeX-SAFE)
 
-Lies die Aufgabe → erkenne den Typ → springe zum Block:
+Wenn ein Viewer LaTeX nur dann rendert, wenn die ZEILE komplett LaTeX ist, benutze dieses Template:
 
-| Schluesselwoerter | Typ | Block |
-|---|---|---|
-| MWST, Vorsteuer, Umsatzsteuer, Steuersatz, 8.1%, 2.6%, 3.8% | MWST-Buchung (Netto/Brutto) | T-MWST |
-| Brutto, Netto, exkl., inkl., MWST berechnen, MWST-Betrag | MWST-Rechnung | T-MWST-CALC |
-| Fahrzeug, Maschine, Investition, Konto 1171, Mobiliar, EDV | Investitions-Buchung | T-FAHR |
-| Offenposten, Rechnungen nicht verbucht, Abschluss, Eroeffnung | Offenposten-Methode | T-OP |
-| Abschreibung, Abschreibungssatz, kalkulatorisch, definitiv | Abschreibung mit MWST | T-ABSCH |
-| T-Konto, Kontodarstellung, Saldo, Abschluss Konto | T-Konto zeichnen | T-KONTOP |
-| Saldosteuersatz, SSS, vereinfacht, keine Vorsteuer | Saldosteuersatz-Methode | T-MWST (SSS) |
-| Rabatt, Skonto, Gutschrift, Rueckgabe, Preisminderung | MWST bei Korrekturen | T-MWST |
-| MWST-Abrechnung, Formular, Umsatz deklarieren, Zahllast | Abrechnung erstellen | T-MWST |
+- Jede Ausgabelinie ist GENAU ein LaTeX-Block:
+  - beginnt mit `$`
+  - endet mit `$`
+- Nummerierung steht IN LaTeX:
+  - `\text{1) }`, `\text{2a) }`, ...
+- Wörter/Kontennamen IMMER in `\text{...}`
+- Beträge: Apostroph-Tausender, 2 Dezimalen (z.B. `1'319.05`)
+- Maximal 1 Buchungssatz pro Zeile
 
-**METHODEN-CHECK** (vor dem Buchen!):
-- Aufgabe sagt "Nettomethode" oder zeigt 2 Buchungssaetze → **MODUS-NETTO**
-- Aufgabe sagt "Bruttomethode" oder zeigt 1 Buchungssatz → **MODUS-BRUTTO**
-- Aufgabe sagt "Saldosteuersatz" oder "keine Vorsteuer" → **MODUS-SSS**
-- Wenn nicht angegeben → Standard = **MODUS-NETTO**
+### Beispiel Buchungssatz (ohne MWST)
 
----
+$\text{1) OCR: Monatslöhne CHF 10'500 per Bank}$
 
-## MI — MICRO INDEX
+$\text{1) S: LohnAu 5000 / H: Bank 1020} \quad 10'500.00$
 
-- QR: Quick Router
-- X-MWST: Steuersaetze-Referenz
-- X-CONTEN: Kontenplan-Referenz
-- T-MWST-CALC: MWST-Berechnungsschema
-- T-MWST: Buchungssaetze (Netto / Brutto / SSS / Abrechnung)
-- T-FAHR: Fahrzeuge und Investitionen
-- T-OP: Offenposten-Buchhaltung
-- T-ABSCH: Abschreibungen mit MWST
-- T-KONTOP: T-Konten-Darstellung
-- X-TRAP: Fallen und haeufige Fehler
+### Beispiel Buchungssatz (mit MWST Nettomethode)
 
----
+$\text{2) OCR: Rg. Blumen CHF 1'319.05 inkl. 8.1\%}$
 
-## WF — WORKFLOW (fuer jede Aufgabe)
+$\text{2) } 1'319.05 \div 1.081 = 1'220.21 \text{ exkl.} \quad \text{MWST } = 98.84$
 
-```
-1) Aufgabe lesen → Typ erkennen (QR)
-2) Methode bestimmen (Netto / Brutto / SSS)
-3) Steuersatz bestimmen (X-MWST)
-4) Relevante Konten identifizieren (X-CONTEN)
-5) MWST-Betrag berechnen (T-MWST-CALC)
-6) Buchungssatz aufstellen (T-MWST / T-FAHR / T-OP)
-7) Kontrolle: Soll = Haben? MWST korrekt?
-```
+$\text{2a) S: WarenAu 4200 / H: VLL 2000} \quad 1'220.21$
+
+$\text{2b) S: VST 1170 / H: VLL 2000} \quad 98.84$
+
+### Beispiel KB (Offenposten)
+
+$\text{3) KB}$
+
+### Beispiel R/F
+
+$\text{a) F — Restaurant = Normalsatz 8.1\%, nicht reduziert}$
 
 ---
 
-## AR — ANSWER RULES
+## 1) Kontenplan (Kernkonten)
 
-### Formatregeln (STRIKT)
-- PLAIN TEXT ONLY. Kein LaTeX. Kein Markdown.
-- Jede Zeile beginnt nummeriert: 1) 2) 3) ...
-- Buchungssatz-Format: Soll-Konto / Haben-Konto / Betrag
-- Brueche als Wortbruch: "a btel" (z.B. "8.1 Hundertstel")
-- Jede Rechenoperation mit Tag am Ende: [*1.081], [:108.1], [*8.1], etc.
-- Keine Meta-Texte, kein "Zusammenfassend"
-- Maximal 1 Buchung pro Zeile
+### Aktiven (Klasse 1)
+- 1000 Kasse
+- 1010 Post
+- 1020 Bank
+- 1100 Forderungen aus LL (FLL / Debitoren)
+- 1109 Delkredere (Wertberichtigung FLL)
+- 1170 Vorsteuer Material/Handel (VST — Normalsatz)
+- 1171 Vorsteuer Investition/Betriebsaufwand (VST — Normalsatz auf Kl. 1 + 6)
+- 1176 Verrechnungssteuer (Guthaben)
+- 1500 Maschinen
+- 1510 Mobiliar
+- 1520 Büromaschinen/Informatik
+- 1530 Fahrzeuge
 
----
+### Passiven (Klasse 2)
+- 2000 Verbindlichkeiten aus LL (VLL / Kreditoren)
+- 2200 Geschuldete MWST / Umsatzsteuer (UST)
 
-## X-MWST — STEUERSAETZE-REFERENZ
+### Erträge (Klasse 3)
+- 3200 Handelserlös / Warenertrag (WarenER)
+- 3400 Dienstleistungsertrag
+- 3600 Übriger Ertrag
+- 3900 Eigenleistungen / Eigenverbrauch
 
-$\textbf{Aktuelle Saetze (ab 2024):}$
-$\text{Normalsatz} = 8{,}1\%$
-$\text{Reduzierter Satz} = 2{,}6\%$
-$\text{Sondersatz (Beherbergung)} = 3{,}8\%$
+### Aufwände (Klasse 4)
+- 4200 Handelswarenaufwand / Warenaufwand (WarenAu)
+- 4400 Dienstleistungsaufwand
 
-$\textbf{Fruehere Saetze (bis 2023):}$
-$\text{Normalsatz} = 7{,}7\%$
-$\text{Reduzierter Satz} = 2{,}5\%$
-$\text{Sondersatz (Beherbergung)} = 3{,}7\%$
+### Personalaufwand (Klasse 5)
+- 5000 Lohnaufwand → **KEINE MWST**
+- 5700 Sozialversicherungsaufwand → **KEINE MWST**
 
-$\textbf{Saldosteuersaetze (Beispiele):}$
-$\text{Branchenabhaengig, z.B. } 0{,}1\% \text{ bis } 6{,}5\%$
-$\text{Typisch in Aufgaben: } 3{,}7\% \text{ oder } 6{,}5\%$
+### Übriger Betriebsaufwand (Klasse 6)
+- 6000 Raumaufwand / Miete
+- 6100 Unterhalt/Reparaturen
+- 6200 Fahrzeugaufwand
+- 6260 Leasingaufwand (KFZ)
+- 6300 Versicherungsaufwand → **KEINE MWST**
+- 6400 Energieaufwand
+- 6500 Verwaltungsaufwand / Büromaterial
+- 6510 Telefonaufwand
+- 6570 Informatikaufwand
+- 6600 Werbeaufwand
+- 6700 Übriger Betriebsaufwand
+- 6800 Abschreibungen → **KEINE MWST**
+- 6900 Finanzaufwand (Zinsen, Kommissionen)
+- 6950 Finanzertrag (Zinsen) → **KEINE MWST (ausgenommen)**
 
-$\textbf{Befreit / Ausgenommen:}$
-$\text{Befreit (Art. 23 MWSTG):} \quad 0\% \text{, Vorsteuer-Abzug moeglich}$
-$\text{Ausgenommen (Art. 21 MWSTG):} \quad \text{keine MWST, KEIN Vorsteuer-Abzug}$
-
-$\textbf{Umrechnungsfaktoren (Normalsatz 8.1\%):}$
-$\text{Netto} \to \text{Brutto:} \quad \times 1{,}081$
-$\text{Brutto} \to \text{Netto:} \quad \div 1{,}081$
-$\text{Brutto} \to \text{MWST:} \quad \times \frac{8{,}1}{108{,}1}$
-$\text{Netto} \to \text{MWST:} \quad \times 0{,}081$
-
----
-
-## X-CONTEN — KONTENPLAN-REFERENZ
-
-$\textbf{MWST-Konten:}$
-$\text{1170 Vorsteuer auf Materialaufwand (VST Material)} \quad \text{Aktiv, Guthaben bei ESTV}$
-$\text{1171 Vorsteuer auf Investitionen/uebrigen Aufwand (VST Inv.)} \quad \text{Aktiv, Guthaben bei ESTV}$
-$\text{2200 Umsatzsteuer (UST)} \quad \text{Passiv, Schuld gegenueber ESTV}$
-$\text{2201 Umsatzsteuer auf vereinnahmtem Entgelt} \quad \text{Passiv (bei SSS)}$
-
-$\textbf{Vorsteuer-Zuordnung:}$
-$\text{1170 VST} \to \text{Kontenklasse 4 (Materialaufwand, Warenaufwand)}$
-$\text{1171 VST} \to \text{Alle anderen Klassen (Personalaufwand, Raumaufwand, Fahrzeuge, Maschinen, Mobiliar)}$
-
-$\textbf{Haeufig verwendete Konten:}$
-$\text{1000 Kasse}$
-$\text{1020 Bank}$
-$\text{1100 Forderungen aus LL (Debitoren)}$
-$\text{1200 Warenvorrat / Vorraete}$
-$\text{1500 Maschinen und Apparate}$
-$\text{1510 Mobiliar und Einrichtungen}$
-$\text{1520 Bueromaschinen / EDV}$
-$\text{1530 Fahrzeuge}$
-$\text{2000 Verbindlichkeiten aus LL (Kreditoren)}$
-$\text{3200 Warenaufwand}$
-$\text{4000 Materialaufwand}$
-$\text{4400 Energieaufwand}$
-$\text{5000 Personalaufwand / Lohnaufwand}$
-$\text{6000 Raumaufwand / Mietaufwand}$
-$\text{6100 Unterhalt / Reparaturen}$
-$\text{6200 Fahrzeugaufwand}$
-$\text{6500 Verwaltungsaufwand}$
-$\text{6600 Werbeaufwand}$
-$\text{3000 Produktionsertrag / Warenertrag}$
-$\text{3200 Handelsertrag (Warenertrag)}$
-$\text{3400 Dienstleistungsertrag}$
+### MWST-Kontenzuordnung (KRITISCH)
+- **VST 1170**: Aufwände aus Kontenklasse **4** (Material, Waren, Handelsware, Energie, DL)
+- **VST 1171**: Aufwände aus Kontenklasse **1** (Investitionen: Maschinen, Fahrzeuge, Mobiliar) + Kontenklasse **6** (übriger Betriebsaufwand: Büro, Telefon, Werbung, Reparaturen, IT, Raumaufwand)
+- **UST 2200**: Auf alle Verkäufe/Erträge (Klasse 3)
+- **KEIN MWST**: Lohn (5000), Sozialvers. (5700), Versicherungen (6300), Zinsen (6900/6950), Abschreibungen (6800)
 
 ---
 
-## T-MWST-CALC — MWST-BERECHNUNGSSCHEMA
+## 2) MWST-Steuersätze
 
-$\textbf{Netto → Brutto (Aufschlagen):}$
-$\text{Brutto} = \text{Netto} \times 1{,}081 \quad \text{(bei 8.1\%)}$
-$\text{Brutto} = \text{Netto} \times 1{,}026 \quad \text{(bei 2.6\%)}$
-$\text{Brutto} = \text{Netto} \times 1{,}038 \quad \text{(bei 3.8\%)}$
+### Aktuelle Sätze (ab 01.01.2024)
+| Satz | Prozent | Faktor inkl→exkl | Faktor exkl→inkl |
+|------|---------|------------------|------------------|
+| Normalsatz | 8.1% | ÷ 1.081 | × 1.081 |
+| Reduzierter Satz | 2.6% | ÷ 1.026 | × 1.026 |
+| Sondersatz (Beherbergung) | 3.8% | ÷ 1.038 | × 1.038 |
 
-$\textbf{Brutto → Netto (Herausrechnen):}$
-$\text{Netto} = \frac{\text{Brutto}}{1{,}081} \quad \text{(bei 8.1\%)}$
-$\text{Netto} = \frac{\text{Brutto}}{1{,}026} \quad \text{(bei 2.6\%)}$
-$\text{Netto} = \frac{\text{Brutto}}{1{,}038} \quad \text{(bei 3.8\%)}$
+### Alte Sätze (vor 01.01.2024) — in älteren Aufgaben/Tests!
+| Satz | Prozent | Faktor inkl→exkl | Faktor exkl→inkl |
+|------|---------|------------------|------------------|
+| Normalsatz | 7.7% | ÷ 1.077 | × 1.077 |
+| Reduzierter Satz | 2.5% | ÷ 1.025 | × 1.025 |
+| Sondersatz (Beherbergung) | 3.7% | ÷ 1.037 | × 1.037 |
 
-$\textbf{MWST-Betrag aus Brutto:}$
-$\text{MWST} = \text{Brutto} \times \frac{8{,}1}{108{,}1} \quad \text{(bei 8.1\%)}$
-$\text{MWST} = \text{Brutto} \times \frac{2{,}6}{102{,}6} \quad \text{(bei 2.6\%)}$
-$\text{MWST} = \text{Brutto} \times \frac{3{,}8}{103{,}8} \quad \text{(bei 3.8\%)}$
+### ACHTUNG: Immer den Steuersatz aus dem Aufgabentext verwenden! Nicht annehmen!
 
-$\textbf{MWST-Betrag aus Netto:}$
-$\text{MWST} = \text{Netto} \times 0{,}081 \quad \text{(bei 8.1\%)}$
-$\text{MWST} = \text{Netto} \times 0{,}026 \quad \text{(bei 2.6\%)}$
-$\text{MWST} = \text{Netto} \times 0{,}038 \quad \text{(bei 3.8\%)}$
+### Steuersatz-Zuordnung
+- **Normalsatz (8.1%)**: Waren, Dienstleistungen, Elektronik, Möbel, Kleidung, Fahrzeuge, Benzin, Alkohol, Tabak, Restaurant/Gastgewerbe, Reparaturen, Büromaterial
+- **Reduzierter Satz (2.6%)**: Lebensmittel (nicht Restaurant!), Medikamente, Bücher, Zeitungen, Wasser, Tierfutter, Saatgut, Pflanzen, alkoholfreie Getränke
+- **Sondersatz (3.8%)**: Hotelübernachtung/Beherbergung (nur Übernachtung, NICHT Frühstück im Restaurant)
+- **Befreit (0%, MIT Vorsteuerabzug)**: Exporte, Lieferungen ins Ausland
+- **Ausgenommen (KEIN Vorsteuerabzug)**: Versicherungen, Krankenkasse, Bildung, Zinsen/Finanzdienstleistungen, Miete (Wohnraum), Gesundheit (ärztliche Leistungen), Kultur, Sport
 
-$\textbf{Schema: Netto = 100\%, MWST = p\%, Brutto = (100+p)\%}$
-$\text{Beispiel 8.1\%: Netto = 100\%, MWST = 8.1\%, Brutto = 108.1\%}$
-$\text{Kontrolle: Netto + MWST = Brutto (immer pruefen!)}$
-
-$\textbf{Rundung:}$
-$\text{MWST-Betraege auf 5 Rappen runden (kaufmaennisch)}$
-
----
-
-## T-MWST — BUCHUNGSSAETZE
-
-### NETTOMETHODE (2 Buchungssaetze pro Transaktion)
-
-$\textbf{Einkauf Waren (Material, Kontenklasse 4):}$
-$\text{1) Warenaufwand (4000/3200)} \quad / \quad \text{Verb aus LL (2000)} \quad \text{Nettobetrag}$
-$\text{2) VST Material (1170)} \quad / \quad \text{Verb aus LL (2000)} \quad \text{MWST-Betrag}$
-
-$\textbf{Einkauf Investition/uebr. Aufwand (Klasse 1,5,6):}$
-$\text{1) Aufwandkonto (z.B. 6000 Miete)} \quad / \quad \text{Verb aus LL (2000)} \quad \text{Nettobetrag}$
-$\text{2) VST Investitionen (1171)} \quad / \quad \text{Verb aus LL (2000)} \quad \text{MWST-Betrag}$
-
-$\textbf{Verkauf:}$
-$\text{1) Ford aus LL (1100)} \quad / \quad \text{Ertragskonto (3000/3400)} \quad \text{Nettobetrag}$
-$\text{2) Ford aus LL (1100)} \quad / \quad \text{UST (2200)} \quad \text{MWST-Betrag}$
-
-$\textbf{Beispiel: Wareneinkauf CHF 5000 netto + 8.1\% MWST:}$
-$\text{1) Warenaufwand / Verb aus LL \quad CHF 5000.00}$
-$\text{2) VST 1170 / Verb aus LL \quad CHF 405.00} \quad [5000 \times 0.081]$
-$\text{Kreditoren-Saldo total: CHF 5405.00}$
-
-$\textbf{Beispiel: Warenverkauf CHF 12000 netto + 8.1\% MWST:}$
-$\text{1) Ford aus LL / Warenertrag \quad CHF 12000.00}$
-$\text{2) Ford aus LL / UST 2200 \quad CHF 972.00} \quad [12000 \times 0.081]$
-$\text{Debitoren-Saldo total: CHF 12972.00}$
-
-### BRUTTOMETHODE (1 Buchungssatz pro Transaktion)
-
-$\textbf{Einkauf (inkl. MWST):}$
-$\text{Warenaufwand (4000)} \quad / \quad \text{Verb aus LL (2000)} \quad \text{Bruttobetrag (inkl. MWST)}$
-
-$\textbf{Verkauf (inkl. MWST):}$
-$\text{Ford aus LL (1100)} \quad / \quad \text{Warenertrag (3000)} \quad \text{Bruttobetrag (inkl. MWST)}$
-
-$\textbf{Periodenende — MWST herausloesen:}$
-$\text{Einkauf: VST 1170 / Warenaufwand \quad MWST-Betrag} \quad [\text{Brutto} \times \frac{8.1}{108.1}]$
-$\text{Verkauf: Warenertrag / UST 2200 \quad MWST-Betrag} \quad [\text{Brutto} \times \frac{8.1}{108.1}]$
-
-$\textbf{Beispiel Brutto: Wareneinkauf CHF 5405 brutto (8.1\%):}$
-$\text{Laufend: Warenaufwand / Verb aus LL \quad CHF 5405.00}$
-$\text{Periodenende: VST 1170 / Warenaufwand \quad CHF 405.00} \quad [5405 \times 8.1 / 108.1]$
-
-### SALDOSTEUERSATZ-METHODE (SSS)
-
-$\textbf{Merkmale:}$
-$\text{- Keine Vorsteuer wird verbucht (kein Konto 1170/1171)}$
-$\text{- Einkauf IMMER brutto gebucht}$
-$\text{- Verkauf brutto gebucht}$
-$\text{- Halbjaehrliche Abrechnung}$
-$\text{- Tieferer Saldosteuersatz (z.B. 6.5\%, 3.7\%)}$
-
-$\textbf{Laufende Buchung (Einkauf):}$
-$\text{Warenaufwand / Verb aus LL \quad Bruttobetrag}$
-
-$\textbf{Laufende Buchung (Verkauf):}$
-$\text{Ford aus LL / Warenertrag \quad Bruttobetrag (inkl. MWST)}$
-
-$\textbf{Halbjahres-Abrechnung:}$
-$\text{Warenertrag / UST 2200 \quad [Bruttoumsatz} \times \text{Saldosteuersatz]}$
-$\text{Beispiel: Umsatz CHF 200000 brutto, SSS 6.5\%:}$
-$\text{Warenertrag / UST 2200 \quad CHF 13000.00} \quad [200000 \times 0.065]$
-
-### MWST-ABRECHNUNG (Effektive Methode)
-
-$\textbf{Formel: Zahllast = UST - VST (1170 + 1171)}$
-
-$\text{UST 2200 (Schuld) \quad - \quad VST 1170 + VST 1171 (Guthaben) \quad = \quad Zahllast}$
-
-$\textbf{Fall 1: Zahllast (UST > VST) → Unternehmen schuldet ESTV:}$
-$\text{1) VST 1170 saldieren: UST 2200 / VST 1170 \quad Saldo 1170}$
-$\text{2) VST 1171 saldieren: UST 2200 / VST 1171 \quad Saldo 1171}$
-$\text{3) Zahlung: UST 2200 / Bank 1020 \quad Restsaldo (= Zahllast)}$
-
-$\textbf{Fall 2: Vorsteuer-Ueberschuss (VST > UST) → ESTV schuldet Unternehmen:}$
-$\text{1) UST saldieren: UST 2200 / VST 1170 \quad Saldo 2200}$
-$\text{2) Ggf. Rest: UST 2200 / VST 1171 \quad verbleibend}$
-$\text{3) Gutschrift: Bank 1020 / VST 1170 (oder 1171) \quad Restsaldo}$
-
-$\textbf{Beispiel:}$
-$\text{UST 2200 = CHF 8100, VST 1170 = CHF 2025, VST 1171 = CHF 810}$
-$\text{Zahllast = 8100 - 2025 - 810 = CHF 5265}$
-$\text{1) UST 2200 / VST 1170 \quad CHF 2025}$
-$\text{2) UST 2200 / VST 1171 \quad CHF 810}$
-$\text{3) UST 2200 / Bank 1020 \quad CHF 5265}$
-
-### RABATT / SKONTO MIT MWST
-
-$\textbf{Rabatt auf Einkauf (Nettomethode):}$
-$\text{1) Verb aus LL / Warenaufwand \quad Nettobetrag des Rabatts}$
-$\text{2) Verb aus LL / VST 1170 \quad MWST auf Rabatt}$
-$\text{(Umgekehrte Buchung des Einkaufs)}$
-
-$\textbf{Skonto auf Einkauf (Nettomethode):}$
-$\text{1) Verb aus LL / Bank \quad Zahlungsbetrag (nach Abzug Skonto)}$
-$\text{2) Verb aus LL / Warenaufwand \quad Netto-Skonto}$
-$\text{3) Verb aus LL / VST 1170 \quad MWST auf Skonto}$
-
-$\textbf{Skonto auf Verkauf (Nettomethode):}$
-$\text{1) Bank / Ford aus LL \quad Zahlungseingang}$
-$\text{2) Warenertrag / Ford aus LL \quad Netto-Skonto}$
-$\text{3) UST 2200 / Ford aus LL \quad MWST auf Skonto}$
+### Wichtige Falle: Lebensmittel vs. Restaurant
+- Sandwich MITNEHMEN = **2.6%** (Lebensmittel)
+- Sandwich IM RESTAURANT essen = **8.1%** (Gastgewerbe-Normalsatz)
+- Hotelübernachtung = **3.8%**, Frühstück im Hotel-Restaurant = **8.1%**
 
 ---
 
-## T-FAHR — FAHRZEUGE UND INVESTITIONEN
+## 3) Quick Router
 
-$\textbf{Kauf Fahrzeug (Nettomethode):}$
-$\text{1) Fahrzeuge 1530 / Verb aus LL (2000) \quad Nettobetrag}$
-$\text{2) VST 1171 / Verb aus LL (2000) \quad MWST-Betrag}$
-$\text{Hinweis: VST 1171 (nicht 1170!) weil Kontenklasse 1}$
+Lies die Aufgabe → erkenne Schlüsselwörter → springe zum Block:
 
-$\textbf{Kauf Maschine:}$
-$\text{1) Maschinen 1500 / Verb aus LL (2000) \quad Nettobetrag}$
-$\text{2) VST 1171 / Verb aus LL (2000) \quad MWST-Betrag}$
+| Schlüsselwörter | Typ | Block |
+|-----------------|-----|-------|
+| Geschäftsfall buchen, Buchungssatz, Nettomethode, Soll/Haben | MWST-Buchung | §4 T-MWST |
+| inkl., exkl., Berechnungsschema, umrechnen | Berechnung | §5 T-BERECH |
+| Rabatt, Skonto, Rücksendung, Gutschrift, Mängelrüge | Minderung | §6 T-MIND |
+| MWST-Abrechnung, ESTV, Quartal, Zahllast, Guthaben | Abrechnung | §7 T-ABRECH |
+| Saldosteuersatz, SSS, Bruttomethode, pauschal, halbjährlich | Saldosteuer | §8 T-SALDO |
+| Offenposten, KB, kein Buchungssatz, laufende Verbuchung | Offenposten | §9 T-OP |
+| 31.12, Abschluss, offene Rechnungen | OP-Abschluss | §9.3 |
+| 01.01, Rückbuchung, Eröffnung, Wiedereröffnung | OP-Rückbuchung | §9.4 |
+| Abschreibung, Verluste Ford., Delkredere | Abschreibung | §10 T-ABSCHR |
+| Kreditkarte, Kommission, Wocheneinnahmen | Kreditkarte | §11 T-KREDIT |
+| Bankkontoauszug, Sollzins, Habenzins, Spesen | Bankauszug | §12 T-BANK |
+| Richtig/Falsch, R/F, wahr, Aussage | R/F-Frage | §13 T-RF |
+| T-Konto, Saldo, Abschluss Konto | T-Konto | §14 T-KONTO |
 
-$\textbf{Kauf Mobiliar:}$
-$\text{1) Mobiliar 1510 / Verb aus LL (2000) \quad Nettobetrag}$
-$\text{2) VST 1171 / Verb aus LL (2000) \quad MWST-Betrag}$
-
-$\textbf{Kauf EDV / Bueromaschinen:}$
-$\text{1) EDV 1520 / Verb aus LL (2000) \quad Nettobetrag}$
-$\text{2) VST 1171 / Verb aus LL (2000) \quad MWST-Betrag}$
-
-$\textbf{Fahrzeugaufwand (Reparatur, Service, Benzin):}$
-$\text{1) Fahrzeugaufwand 6200 / Verb aus LL (2000) \quad Nettobetrag}$
-$\text{2) VST 1171 / Verb aus LL (2000) \quad MWST-Betrag}$
-$\text{Hinweis: Fahrzeugaufwand = Klasse 6 → VST 1171}$
-
-$\textbf{Merke: VST-Zuordnung bei Investitionen:}$
-$\text{Kontenklasse 4 (Material/Waren) → VST 1170}$
-$\text{Alle anderen Klassen (1,5,6,etc.) → VST 1171}$
-
-$\textbf{Verkauf Fahrzeug (Nettomethode):}$
-$\text{1) Ford aus LL (1100) / Fahrzeuge 1530 \quad Nettobetrag}$
-$\text{2) Ford aus LL (1100) / UST 2200 \quad MWST-Betrag}$
+### METHODE ERKENNEN (vor dem Lösen!)
+1. Steht "Nettomethode" oder werden VST/UST getrennt? → **Nettomethode** (§4)
+2. Steht "Saldosteuersatzmethode" oder "Bruttomethode"? → **SSS** (§8)
+3. Steht "Offenposten" oder "KB"? → **Offenposten** (§9)
+4. Kombination? z.B. "Offenposten + MWST" → §9 + §4 kombiniert
 
 ---
 
-## T-OP — OFFENPOSTEN-BUCHHALTUNG (KAP 11)
+## 4) T-MWST — Nettomethode Buchungen
 
-$\textbf{Grundprinzip:}$
-$\text{Rechnungen werden NICHT verbucht wenn sie eintreffen.}$
-$\text{NUR Zahlungen (Kasse/Bank) werden laufend gebucht.}$
-$\text{Am Periodenende: Offene Rechnungen nachbuchen.}$
+### Grundprinzip
+- Beträge OHNE MWST (netto = 100%) auf Aufwand/Ertrag buchen
+- MWST-Betrag SEPARAT auf VST (1170 oder 1171) oder UST (2200)
+- Jeder MWST-pflichtige Geschäftsfall = ZWEI Buchungszeilen (oder Split-Buchung)
 
-$\textbf{Laufende Buchungen (nur Zahlungen):}$
-$\text{Einkauf bezahlt: Warenaufwand / Bank \quad Betrag}$
-$\text{Verkauf erhalten: Bank / Warenertrag \quad Betrag}$
+### Einkauf (Rechnung erhalten / wir bezahlen)
 
-$\textbf{Abschluss (Periodenende) — Offene Rechnungen buchen:}$
-$\text{Offene Lieferantenrechnungen (wir schulden):}$
-$\text{Warenaufwand / Verb aus LL (2000) \quad Betrag}$
-$\text{Offene Kundenrechnungen (Kunden schulden uns):}$
-$\text{Ford aus LL (1100) / Warenertrag \quad Betrag}$
+**Betrag inkl. MWST gegeben:**
+- Netto = inkl. ÷ Faktor (z.B. ÷ 1.081)
+- MWST = inkl. − netto
+- S: Aufwandkonto (netto) / H: VLL 2000 oder Bank 1020 (inkl.)
+- S: VST 1170 oder 1171 (MWST) / H: VLL 2000 oder Bank 1020
 
-$\textbf{Eroeffnung (neue Periode) — Rueckbuchung:}$
-$\text{Verb aus LL (2000) / Warenaufwand \quad Betrag}$
-$\text{Warenertrag / Ford aus LL (1100) \quad Betrag}$
-$\text{(Exakt umgekehrte Buchungen vom Abschluss)}$
+**Betrag exkl. MWST gegeben:**
+- MWST = exkl. × Satz (z.B. × 0.081)
+- Inkl. = exkl. + MWST
+- S: Aufwandkonto (exkl.) / H: VLL 2000 oder Bank 1020 (inkl.)
+- S: VST 1170 oder 1171 (MWST) / H: VLL 2000 oder Bank 1020
 
-$\textbf{Warum Rueckbuchung?}$
-$\text{Wenn die Rechnung spaeter bezahlt wird, wird sie normal gebucht.}$
-$\text{Ohne Rueckbuchung waere der Aufwand/Ertrag doppelt erfasst.}$
+**LaTeX-Ausgabe-Muster:**
+$\text{n) } \text{inkl.} \div 1.081 = \text{exkl.} \quad \text{MWST} = \text{Diff.}$
+$\text{na) S: [AufwandKto] / H: VLL 2000} \quad \text{exkl.}$
+$\text{nb) S: VST [1170/1171] / H: VLL 2000} \quad \text{MWST}$
 
-$\textbf{Offenposten + MWST:}$
-$\text{Bei Offenposten-Methode → Abrechnung nach vereinnahmtem Entgelt.}$
-$\text{MWST wird erst bei Zahlung geschuldet/abziehbar.}$
-$\text{Haeufig kombiniert mit Saldosteuersatz-Methode.}$
+### Verkauf (Rechnung ausgestellt / Kunde bezahlt)
 
-$\textbf{Offenposten + Fremdwaehrung:}$
-$\text{Zahlungen: Tageskurs am Zahlungstag}$
-$\text{Offene Rechnungen am Jahresende: Bilanzkurs}$
-$\text{Kursdifferenzen ueber Konto Kursdifferenzen buchen}$
+**Betrag inkl. MWST:**
+- Netto = inkl. ÷ Faktor
+- MWST = inkl. − netto
+- S: FLL 1100 oder Kasse 1000 oder Bank 1020 (inkl.) / H: Ertragskonto (netto)
+- S: (gleich) / H: UST 2200 (MWST)
 
-$\textbf{Beispiel Offenposten-Zyklus:}$
-$\text{1. Quartal laufend: Warenaufwand / Bank CHF 45000 (bezahlte Rechnungen)}$
-$\text{Abschluss: Warenaufwand / Verb aus LL CHF 8000 (offene Rechnungen)}$
-$\text{Eroeffnung Q2: Verb aus LL / Warenaufwand CHF 8000 (Rueckbuchung)}$
-$\text{Q2 laufend: Warenaufwand / Bank CHF 52000 (inkl. der CHF 8000 von Q1)}$
+**LaTeX-Ausgabe-Muster:**
+$\text{n) } \text{inkl.} \div 1.081 = \text{exkl.} \quad \text{MWST} = \text{Diff.}$
+$\text{na) S: FLL 1100 / H: WarenER 3200} \quad \text{exkl.}$
+$\text{nb) S: FLL 1100 / H: UST 2200} \quad \text{MWST}$
 
----
-
-## T-ABSCH — ABSCHREIBUNGEN MIT MWST
-
-$\textbf{Kalkulatorische Abschreibung (geschaetzt, unterjaerig):}$
-$\text{Abschreibung / Fahrzeuge (oder anderes Anlagekonto) \quad Betrag}$
-$\text{Keine MWST bei Abschreibungen!}$
-
-$\textbf{Definitive Abschreibung (effektiv, Jahresabschluss):}$
-$\text{Abschreibung / Fahrzeuge \quad Betrag}$
-$\text{Differenz kalkulatorisch vs. definitiv korrigieren}$
-
-$\textbf{Wichtig: Abschreibungen sind MWST-frei.}$
-$\text{Abschreibung ist kein Kauf/Verkauf → keine VST, keine UST.}$
-$\text{VST faellt nur beim KAUF der Anlage an (→ T-FAHR).}$
-
-$\textbf{Lineare Abschreibung:}$
-$\text{Jaehrlicher Betrag} = \frac{\text{Anschaffungswert} - \text{Restwert}}{\text{Nutzungsdauer in Jahren}}$
-
-$\textbf{Degressive Abschreibung (Buchwert-Methode):}$
-$\text{Jaehrlicher Betrag} = \text{Buchwert} \times \text{Abschreibungssatz in \%}$
+### Geschäftsfälle OHNE MWST (1 Zeile, keine VST/UST)
+- Lohn: S: LohnAu 5000 / H: Bank 1020
+- Sozialversicherung: S: SozVersAu 5700 / H: Bank 1020
+- Versicherungsprämie: S: VersAu 6300 / H: Bank 1020
+- Zinsaufwand (Sollzins): S: FinanzAu 6900 / H: Bank 1020
+- Zinsertrag (Habenzins): S: Bank 1020 / H: FinanzER 6950
+- Abschreibung: S: Abschreibung 6800 / H: Aktivkonto
+- Privatbezug: S: Privat 2850 / H: Bank/Kasse
 
 ---
 
-## T-KONTOP — T-KONTEN-DARSTELLUNG
+## 5) T-BERECH — Berechnungsschema
 
-$\textbf{T-Konto Grundstruktur:}$
-$\text{Linke Seite = SOLL (Zunahme bei Aktiv/Aufwand)}$
-$\text{Rechte Seite = HABEN (Zunahme bei Passiv/Ertrag)}$
+### inkl. → exkl. (Normalsatz 8.1%)
+$\text{inkl. } 108.1\% = [Betrag]$
+$\text{exkl. } 100\% = [Betrag] \div 1.081$
+$\text{MWST } 8.1\% = \text{inkl.} - \text{exkl.}$
 
-$\textbf{T-Konto VST 1170 (Aktivkonto):}$
-$\text{SOLL: Vorsteuer aus Einkauf Material}$
-$\text{HABEN: Saldierung an UST 2200 (bei Abrechnung)}$
+### exkl. → inkl. (Normalsatz 8.1%)
+$\text{exkl. } 100\% = [Betrag]$
+$\text{MWST } 8.1\% = [Betrag] \times 0.081$
+$\text{inkl. } 108.1\% = \text{exkl.} + \text{MWST}$
 
-$\textbf{T-Konto VST 1171 (Aktivkonto):}$
-$\text{SOLL: Vorsteuer aus Investitionen/uebr. Aufwand}$
-$\text{HABEN: Saldierung an UST 2200 (bei Abrechnung)}$
+### Für andere Sätze: gleiche Logik, Faktor anpassen
+- 2.6%: ÷ 1.026 bzw. × 0.026
+- 3.8%: ÷ 1.038 bzw. × 0.038
+- 7.7%: ÷ 1.077 bzw. × 0.077
 
-$\textbf{T-Konto UST 2200 (Passivkonto):}$
-$\text{SOLL: Saldierung VST 1170, VST 1171, Zahlung an ESTV}$
-$\text{HABEN: Umsatzsteuer aus Verkauf}$
-
-$\textbf{Beispiel T-Konto UST 2200:}$
-$\text{SOLL: VST 1170 \quad CHF 2025}$
-$\text{SOLL: VST 1171 \quad CHF 810}$
-$\text{SOLL: Bank 1020 \quad CHF 5265 (Zahllast)}$
-$\text{HABEN: Aus Verkaeufen \quad CHF 8100}$
-$\text{Saldo: 0 (ausgeglichen)}$
-
-$\textbf{T-Konto Verb aus LL 2000 (Passivkonto):}$
-$\text{SOLL: Zahlungen (Bank), Rabatte, Skonti}$
-$\text{HABEN: Einkaufsrechnungen (Netto + MWST)}$
-
-$\textbf{T-Konto Ford aus LL 1100 (Aktivkonto):}$
-$\text{SOLL: Verkaufsrechnungen (Netto + MWST)}$
-$\text{HABEN: Zahlungseingaenge, Skonti, Gutschriften}$
+### ACHTUNG: Immer auf 5 Rappen runden (Schweizer Rundung)
 
 ---
 
-## X-TRAP — FALLEN UND HAEUFIGE FEHLER
+## 6) T-MIND — Minderungen (Skonto, Rabatt, Rücksendung)
 
-| # | Falle | Fix |
-|---|---|---|
-| 1 | VST 1170 statt 1171 (oder umgekehrt) | Kontenklasse 4 = 1170, alles andere = 1171 |
-| 2 | MWST auf Brutto statt Netto berechnet | Netto × 0.081 ODER Brutto × 8.1/108.1 |
-| 3 | Bruttomethode: MWST nicht herausgeloest | Am Periodenende IMMER VST/UST separieren |
-| 4 | SSS: Vorsteuer verbucht | Bei Saldosteuersatz gibt es KEINE Vorsteuer |
-| 5 | Abrechnung: Reihenfolge falsch | Erst 1170 an 2200, dann 1171 an 2200, dann Rest an Bank |
-| 6 | Rabatt/Skonto: MWST vergessen | Rabatt reduziert auch die MWST proportional |
-| 7 | Offenposten: Rueckbuchung vergessen | Neue Periode IMMER mit Rueckbuchung starten |
-| 8 | Offenposten: Rechnung und Zahlung gebucht | Bei OP-Methode NUR Zahlungen laufend buchen |
-| 9 | Rundung vergessen | MWST-Betraege auf 5 Rappen runden |
-| 10 | Soll ≠ Haben | Jeder Buchungssatz: Soll-Summe = Haben-Summe |
-| 11 | Netto/Brutto verwechselt | "exkl." = Netto, "inkl." = Brutto |
-| 12 | Investition als Aufwand gebucht | Fahrzeug = Konto 1530, nicht 6200 |
-| 13 | Steuersaetze gemischt (alt/neu) | Aufgabe genau lesen: 8.1% (neu) oder 7.7% (alt) |
-| 14 | SSS auf Netto statt Brutto | Saldosteuersatz wird auf BRUTTO-Umsatz angewendet |
-| 15 | Bei Verkauf: UST auf Soll gebucht | UST gehoert auf HABEN-Seite (Schuld = Passiv) |
+### Grundregel: Minderung = umgekehrter Buchungssatz + MWST-Korrektur
+
+### Skonto auf EINKAUF (wir erhalten Skonto beim Bezahlen)
+- Rechnungsbetrag war inkl. MWST
+- Skonto wird auch auf MWST berechnet
+- Skontobetrag inkl. → aufteilen in netto + MWST
+
+$\text{S: VLL 2000} \quad \text{(voller Rg.-Betrag inkl.)}$
+$\text{H: Bank 1020} \quad \text{(Zahlung = inkl. minus Skonto inkl.)}$
+$\text{H: AufwandKto} \quad \text{(Skonto netto)}$
+$\text{H: VST 1170/1171} \quad \text{(Skonto MWST)}$
+
+Oder als Kompaktform:
+$\text{n) Skonto inkl.} = \text{Rg. inkl.} \times \text{Skonto-\%}$
+$\text{n) Skonto exkl.} = \text{Skonto inkl.} \div 1.081$
+$\text{n) Skonto MWST} = \text{Skonto inkl.} - \text{Skonto exkl.}$
+$\text{na) S: VLL 2000 / H: Bank 1020} \quad \text{Zahlung}$
+$\text{nb) S: VLL 2000 / H: AufwandKto} \quad \text{Skonto exkl.}$
+$\text{nc) S: VLL 2000 / H: VST 1170} \quad \text{Skonto MWST}$
+
+### Skonto auf VERKAUF (Kunde erhält Skonto)
+$\text{na) S: Bank 1020 / H: FLL 1100} \quad \text{Zahlung}$
+$\text{nb) S: ErtragKto / H: FLL 1100} \quad \text{Skonto exkl.}$
+$\text{nc) S: UST 2200 / H: FLL 1100} \quad \text{Skonto MWST}$
+
+### Rabatt nachträglich / Gutschrift / Mängelrüge
+- Gleiche Logik wie Skonto, einfach mit Rabattbetrag statt Skontobetrag
+- Bei Einkauf: S: VLL / H: AufwandKto + H: VST
+- Bei Verkauf: S: ErtragKto + S: UST / H: FLL
+
+### Rücksendung
+- Gleiche Logik: umgekehrter Buchungssatz der Original-Buchung (anteilig)
+- MWST wird entsprechend zurückgebucht
+
+---
+
+## 7) T-ABRECH — MWST-Abrechnung (Nettomethode)
+
+### Quartalsende: VST und UST verrechnen
+
+**Schritt 1: Salden ermitteln**
+- VST 1170 → Soll-Saldo = Guthaben
+- VST 1171 → Soll-Saldo = Guthaben
+- UST 2200 → Haben-Saldo = Schuld
+
+**Schritt 2: Verrechnung**
+- Zahllast = UST (H-Saldo) − VST 1170 (S-Saldo) − VST 1171 (S-Saldo)
+- Wenn positiv → Zahllast an ESTV (wir schulden)
+- Wenn negativ → Guthaben von ESTV (wir erhalten)
+
+**Schritt 3: Buchungssätze**
+$\text{a) S: UST 2200 / H: VST 1170} \quad \text{[ganzer VST 1170 Saldo]}$
+$\text{b) S: UST 2200 / H: VST 1171} \quad \text{[ganzer VST 1171 Saldo]}$
+$\text{c) S: UST 2200 / H: Bank 1020} \quad \text{[Restbetrag = Zahllast]}$
+
+**LaTeX-Ausgabe-Muster:**
+$\text{UST Saldo H: } [Betrag]$
+$\text{- VST 1170 Saldo S: } [Betrag]$
+$\text{- VST 1171 Saldo S: } [Betrag]$
+$\text{= Zahllast ESTV: } [Betrag]$
+$\text{a) S: UST 2200 / H: VST 1170} \quad [Betrag]$
+$\text{b) S: UST 2200 / H: VST 1171} \quad [Betrag]$
+$\text{c) S: UST 2200 / H: Bank 1020} \quad [Betrag]$
+
+**Resultat:** VST 1170 Saldo = 0, VST 1171 Saldo = 0, UST 2200 Saldo = 0
+
+---
+
+## 8) T-SALDO — Saldosteuersatzmethode (SSS)
+
+### Grundprinzip
+- **Bruttomethode**: Alle Beträge INKL. MWST buchen (kein Netto-Split)
+- **KEIN Vorsteuer-Konto** (kein 1170, kein 1171)
+- Nur UST 2200 existiert
+- Abrechnung HALBJÄHRLICH (nicht quartalsweise)
+
+### Buchungen (Brutto)
+- Einkauf: S: AufwandKto / H: VLL oder Bank (Betrag inkl. MWST!)
+- Verkauf: S: FLL oder Kasse / H: ErtragKto (Betrag inkl. MWST!)
+- Lohn: wie immer (kein MWST)
+- Skonto/Rabatt: wie Nettomethode, aber Brutto-Beträge direkt
+
+### MWST-Berechnung (Semesterende)
+$\text{MWST-Schuld} = \text{Steuerbarer Umsatz (brutto)} \times \frac{\text{SSS}}{100}$
+
+**Steuerbarer Umsatz = alle Ertrags-Konten (Klasse 3) zusammenzählen**
+→ ACHTUNG: Minderungen (Skonto, Rabatt) bereits abgezogen!
+
+### Buchung Saldosteuer
+$\text{a) S: ErtragKto / H: UST 2200} \quad [MWST\text{-Schuld}]$
+$\text{b) S: UST 2200 / H: Bank/Post} \quad [MWST\text{-Schuld}]$
+
+### Beispiel SSS 6.2%
+$\text{Steuerbarer Umsatz brutto: } 320'200.00$
+$\text{MWST} = 320'200.00 \times 6.2 \div 100 = 19'852.40$
+$\text{a) S: HonorarER / H: UST 2200} \quad 19'852.40$
+$\text{b) S: UST 2200 / H: Post 1010} \quad 19'852.40$
+
+### SSS: Typische Saldosteuersätze
+- Werden in der Aufgabe angegeben (z.B. 6.2%, 5.1%, 6.7%)
+- IMMER den Satz aus der Aufgabe verwenden!
+
+---
+
+## 9) T-OP — Offenposten-Buchhaltung (Kap 11)
+
+### 9.1 Grundprinzip — Vergleich der zwei Methoden
+
+**Methode mit laufender Verbuchung (Standard):**
+- Rechnung erhalten/versandt → sofort buchen
+- Zahlung → zweiter Buchungssatz
+
+**Offenposten-Methode:**
+- Rechnung erhalten/versandt → **KB** (Kein Buchungssatz!)
+- Zahlung bar/Bank → buchen (direkt Aufwand/Ertrag an Bank/Kasse)
+- Am 31.12: Alle OFFENEN (unbezahlten) Rechnungen buchen
+- Am 01.01: Rückbuchungen der offenen Posten
+
+### 9.2 KB-Regel (Wann "Kein Buchungssatz"?)
+
+**KB gilt NUR bei Offenposten-Methode für:**
+- Rechnung erhalten (Einkauf auf Kredit) → KB
+- Rechnung versandt (Verkauf auf Kredit) → KB
+- Gutschrift erhalten/versandt (auf Kredit) → KB
+
+**KEIN KB bei:**
+- Barzahlung / per Bank / per Post → IMMER buchen!
+- Abschreibungen (kalkulatorisch) → IMMER buchen!
+- Lohnzahlung → IMMER buchen (ist eine Zahlung!)
+
+### LaTeX-Ausgabe KB:
+$\text{n) KB}$
+
+### 9.3 Abschluss per 31.12 (Offenposten-Methode)
+
+**Am 31.12 werden ALLE unbezahlten Rechnungen gebucht:**
+
+**Offene Kundenrechnungen (wir haben Guthaben):**
+$\text{S: FLL 1100 / H: [ErtragKto]} \quad [Betrag]$
+
+**Offene Lieferantenrechnungen (wir schulden):**
+$\text{S: [AufwandKto] / H: VLL 2000} \quad [Betrag]$
+
+**Bei mehreren offenen Rechnungen pro Konto:** Jede einzeln buchen ODER Summe pro Konto
+
+**ACHTUNG: Der Betrag am 31.12 =**
+- Originalrechnung MINUS bereits geleistete Teilzahlungen
+- MINUS Skonto (falls schon gewährt)
+- MINUS Gutschriften
+- = Offener Restbetrag
+
+### 9.4 Rückbuchung per 01.01 (Wiedereröffnung)
+
+**Am 01.01 werden die 31.12-Buchungen UMGEKEHRT:**
+
+**Für ehemalige Kundenforderungen:**
+$\text{S: [ErtragKto] / H: FLL 1100} \quad [Betrag]$
+
+**Für ehemalige Lieferantenschulden:**
+$\text{S: VLL 2000 / H: [AufwandKto]} \quad [Betrag]$
+
+**WICHTIG: Die Rückbuchung betrifft NUR Posten, die am 31.12 gebucht wurden!**
+
+### 9.5 Offenposten + MWST (Kombination)
+
+Wenn die Aufgabe Offenposten MIT MWST verlangt:
+- KB bleibt KB (keine Änderung)
+- Bei Barzahlung: Nettomethode-Split (Aufwand + VST oder Ertrag + UST)
+- Am 31.12: Abschlussbuchung OHNE MWST-Split (Bruttobetrag)
+  → S: FLL / H: ErtragKto (Brutto inkl. MWST)
+  → S: AufwandKto / H: VLL (Brutto inkl. MWST)
+- Am 01.01: Rückbuchung OHNE MWST-Split (gleicher Bruttobetrag)
+  → Dann bei späterer Zahlung: Nettomethode-Split anwenden
+
+### 9.6 Offenposten — Spezialfälle
+
+**Teilzahlung:**
+- Im OP: Nur die Zahlung buchen (S: AufwandKto / H: Bank)
+- Am 31.12: Offener REST buchen (Original − Teilzahlung)
+
+**Skonto bei Offenposten:**
+- Im OP: Nur Zahlbetrag (nach Skonto) buchen als Aufwand/Ertrag
+- Kein separater Skonto-Buchungssatz nötig (weil Original nie gebucht wurde!)
+
+**Mahnung:**
+- KB im Offenposten (Mahnung ist kein Zahlungsvorgang)
+
+---
+
+## 10) T-ABSCHR — Abschreibungen
+
+### Kalkulatorische (planmässige) Abschreibung
+$\text{S: Abschreibung 6800 / H: [Aktivkonto]} \quad [Betrag]$
+- Gilt in BEIDEN Methoden (laufend + Offenposten)
+- **KEINE MWST** auf Abschreibungen!
+
+### Definitive Abschreibung (Verlust auf Forderungen)
+$\text{S: Verluste FLL 3800 / H: FLL 1100} \quad [Betrag]$
+Oder wenn Delkredere:
+$\text{S: Verluste FLL 3800 / H: Delkredere 1109} \quad [Betrag]$
+
+---
+
+## 11) T-KREDIT — Kreditkartenabrechnung
+
+### Wocheneinnahmen per Kreditkarte (inkl. MWST)
+$\text{a) S: FLL KK / H: WarenER 3200} \quad \text{exkl.}$
+$\text{b) S: FLL KK / H: UST 2200} \quad \text{MWST}$
+
+### Kreditkartenabrechnung (Bank erhält Nettobetrag)
+$\text{a) S: Bank 1020 / H: FLL KK} \quad \text{Auszahlungsbetrag}$
+$\text{b) S: FinanzAu 6900 / H: FLL KK} \quad \text{Kommission}$
+
+ACHTUNG: Kommission der Kreditkartengesellschaft = FinanzAu, KEINE MWST (Finanzdienstleistung = ausgenommen)
+
+---
+
+## 12) T-BANK — Bankkontoauszug buchen
+
+### Sollzins (Bank belastet uns Zinsen)
+$\text{S: FinanzAu 6900 / H: Bank 1020} \quad [Betrag]$
+Keine MWST (Zinsen = ausgenommen)
+
+### Habenzins (Bank schreibt uns Zinsen gut)
+$\text{S: Bank 1020 / H: FinanzER 6950} \quad [Nettobetrag]$
+$\text{S: Guthaben VST 1176 / H: FinanzER 6950} \quad [Verrechnungssteuer]$
+Verrechnungssteuer = 35% des Bruttozinses
+Keine MWST (Zinsen = ausgenommen)
+
+### Spesen, Kommissionen (Bank belastet)
+$\text{a) S: FinanzAu 6900 / H: Bank 1020} \quad \text{exkl.}$
+$\text{b) S: VST 1171 / H: Bank 1020} \quad \text{MWST}$
+→ Bankspesen können MWST-pflichtig sein! → VST 1171 (Klasse 6)
+
+---
+
+## 13) T-RF — Richtig/Falsch Fakten
+
+### MWST-Fakten (Kap 4)
+- Steuersubjekt = Unternehmen mit Umsatz > CHF 100'000/Jahr
+- VST = Aktivkonto (Guthaben bei ESTV), UST = Passivkonto (Schuld an ESTV)
+- VST 1170 = Klasse 4 (Waren/Material), VST 1171 = Klasse 1+6 (Investition/Betrieb)
+- Nettomethode = Beträge exkl. MWST buchen
+- Bruttomethode = Beträge inkl. MWST buchen
+- SSS = kein Vorsteuerabzug, nur Umsatzsteuer pauschal
+- Nettomethode = quartalsweise Abrechnung
+- SSS = halbjährliche Abrechnung (semesterweise)
+- Lohn, Zinsen, Versicherungen, Abschreibungen = KEINE MWST
+- Lebensmittel zum Mitnehmen = 2.6%, im Restaurant = 8.1%
+- Medikamente = 2.6%
+- Hotel-Übernachtung = 3.8%, Frühstück im Restaurant = 8.1%
+- Befreit (Export) ≠ Ausgenommen (Gesundheit, Bildung, Finanzen)
+- Befreit: MIT Vorsteuerabzug; Ausgenommen: OHNE Vorsteuerabzug
+
+### Offenposten-Fakten (Kap 11)
+- Rechnungen auf Kredit = KB (bei Offenposten-Methode)
+- Barzahlungen = immer buchen (auch bei Offenposten)
+- 31.12 = offene Rechnungen buchen (FLL/VLL)
+- 01.01 = Rückbuchungen (umgekehrt)
+- Kalkulatorische Abschreibung = in beiden Methoden gleich
+- Lohn = in beiden Methoden gleich (ist eine Zahlung)
+
+---
+
+## 14) T-KONTO — T-Konten führen
+
+### Ausgabeformat T-Konto
+
+$\text{--- [Kontoname] [Nr] ---}$
+$\text{S: } [Betrag] \text{ (Ref)} \quad \text{H: } [Betrag] \text{ (Ref)}$
+$\text{S: } [Betrag] \text{ (Ref)} \quad \text{H: } [Betrag] \text{ (Ref)}$
+$\text{Total S: } [Summe] \quad \text{Total H: } [Summe]$
+$\text{Saldo: } [Betrag] \text{ [S/H]}$
+
+### VST 1170 (Aktivkonto, Soll-Saldo)
+- Soll: Alle MWST-Beträge aus Einkäufen Klasse 4
+- Haben: MWST-Abrechnung (Verrechnung mit UST) + Skonto-Korrekturen
+- Endsaldo nach Abrechnung = 0
+
+### VST 1171 (Aktivkonto, Soll-Saldo)
+- Soll: Alle MWST-Beträge aus Investitionen/Betriebsaufwand Klasse 1+6
+- Haben: MWST-Abrechnung (Verrechnung mit UST)
+- Endsaldo nach Abrechnung = 0
+
+### UST 2200 (Passivkonto, Haben-Saldo)
+- Haben: Alle MWST-Beträge aus Verkäufen
+- Soll: MWST-Abrechnung (VST 1170 + VST 1171 + Zahlung Bank)
+- Endsaldo nach Abrechnung = 0
+
+### FLL 1100 (Aktivkonto)
+- Soll: Verkäufe auf Kredit, 31.12-Abschluss (OP)
+- Haben: Zahlungseingänge, Skonto, 01.01-Rückbuchung (OP)
+
+### VLL 2000 (Passivkonto)
+- Haben: Einkäufe auf Kredit, 31.12-Abschluss (OP)
+- Soll: Zahlungsausgänge, Skonto, 01.01-Rückbuchung (OP)
+
+---
+
+## 15) X-TRAP — Häufige Fehler / Fallen
+
+1. **VST 1170 vs 1171 verwechselt**: 1170 = Klasse 4 (Waren), 1171 = Klasse 1+6 (Investition/Betrieb)
+2. **Steuersatz nicht aus Aufgabe gelesen**: IMMER den angegebenen Satz verwenden (7.7% oder 8.1% etc.)
+3. **Lohn mit MWST gebucht**: Lohn hat KEINE MWST!
+4. **Restaurant vs. Mitnehmen verwechselt**: Restaurant = 8.1% (Normalsatz), Mitnehmen = 2.6%
+5. **Skonto ohne MWST-Korrektur**: Skonto MUSS auch die MWST-Komponente korrigieren (VST/UST anpassen)
+6. **Offenposten: Rechnung gebucht statt KB**: Bei OP-Methode KEINE Buchung für Rechnungen auf Kredit!
+7. **Offenposten: Barzahlung als KB notiert**: Barzahlungen werden IMMER gebucht, auch bei OP!
+8. **31.12 vergessen**: ALLE offenen Rechnungen am 31.12 buchen!
+9. **01.01 Rückbuchung vergessen**: Am 01.01 MÜSSEN die 31.12-Buchungen umgekehrt werden!
+10. **SSS: Vorsteuer abgezogen**: Bei Saldosteuersatzmethode gibt es KEIN Vorsteuer-Konto!
+11. **SSS: Nettobetrag statt Brutto gebucht**: SSS = alles BRUTTO buchen!
+12. **MWST-Abrechnung: Bank vergessen**: Nach VST-Verrechnung bleibt Rest = Zahlung an ESTV per Bank!
+13. **Beträge nicht auf 2 Dezimalen**: IMMER CHF mit 2 Dezimalstellen!
+14. **Soll/Haben vertauscht**: Aufwand/Aktivzunahme = SOLL, Ertrag/Passivzunahme = HABEN
+15. **Befreit mit Ausgenommen verwechselt**: Befreit (Export) = MIT VST-Abzug; Ausgenommen = OHNE VST-Abzug
+16. **Kreditkarten-Kommission mit MWST**: Kommission KK-Gesellschaft = Finanzdienstleistung = AUSGENOMMEN (keine MWST)
+17. **Bankspesen ohne MWST**: Bankspesen KÖNNEN MWST enthalten → prüfen! (VST 1171)
+18. **Verrechnungssteuer vergessen**: Habenzins → Bank erhält 65%, 35% = Guthaben VST 1176
