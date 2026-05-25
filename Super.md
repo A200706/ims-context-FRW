@@ -23,22 +23,38 @@ $\text{3) } \text{Versicherungsaufwand} / \text{Bank} \quad 3'200.00$
 
 ---
 
-## 1) MWST-Steuersätze
+## 1) MWST-Steuersätze (EXAKTE Divisoren)
 
-- 8.1% = Normalsatz (Waren, DL, AV)
-- 2.6% = Reduziert (Nahrungsmittel, Bücher, Medikamente, Wasser in Leitungen)
-- 3.8% = Beherbergung (Hotels)
+| Satz | Divisor (Brutto→Netto) | Formel Netto | Formel MWST |
+|------|------------------------|--------------|------------|
+| **8.1%** | ÷ 108.1 × 100 | `Brutto ÷ 108.1 × 100` | `Brutto ÷ 108.1 × 8.1` |
+| **2.6%** | ÷ 102.6 × 100 | `Brutto ÷ 102.6 × 100` | `Brutto ÷ 102.6 × 2.6` |
+| **3.8%** | ÷ 103.8 × 100 | `Brutto ÷ 103.8 × 100` | `Brutto ÷ 103.8 × 3.8` |
+
+### Berechnungsbeispiele (intern, NICHT anzeigen):
+
+**8.1% auf CHF 16'215:**
+- Netto = 16'215 ÷ 108.1 × 100 = **15'000.00**
+- MWST = 16'215 ÷ 108.1 × 8.1 = **1'215.00**
+
+**2.6% auf CHF 2'052:**
+- Netto = 2'052 ÷ 102.6 × 100 = **2'000.00**
+- MWST = 2'052 ÷ 102.6 × 2.6 = **52.00**
+
+**⚠️ KRITISCH: 2.6% bedeutet ÷102.6 (NICHT ÷1.026!)**
+- Falsch: 2'052 ÷ 1.026 = 2'002 (falsch!)
+- Richtig: 2'052 ÷ 102.6 × 100 = 2'000 (korrekt!)
 
 ---
 
-## 2) MWST-Berechnungsformeln (intern — NICHT anzeigen)
+## 2) MWST-Berechnung Schritt-für-Schritt
 
-Brutto → Netto: `Netto = Brutto / (100 + Rate) × 100`
-Brutto → MWST: `MWST = Brutto / (100 + Rate) × Rate`
-Netto → MWST: `MWST = Netto × Rate / 100`
-Rundung: auf 5 Rappen → `ROUND(Betrag × 20) / 20`
+**Bei "inkl. X% MWST":**
 
-⚠️ NIEMALS Bruttobetrag direkt als MWST verwenden.
+1. **Rate erkennen:** 8.1% → 108.1 | 2.6% → 102.6 | 3.8% → 103.8
+2. **Brutto durch Rate teilen:** `Brutto ÷ Divisor`
+3. **× 100 für Netto** (oder × Satz für MWST)
+4. **Auf 5 Rappen runden:** `ROUND(Betrag × 20) / 20`
 
 ---
 
@@ -58,7 +74,7 @@ $\text{VST 1170 oder 1171} / \text{Verb aus LL} \quad \text{[MWST]}$
 
 **Verkauf auf Rechnung:**
 $\text{Ford aus LL} / \text{Ertragskonto} \quad \text{[Netto]}$
-$\text{Ford aus LL} / \text{Umsatzsteuer 2200} \quad \text{[MWST]}$
+$\text{Ford aus LL} / \text{Umsatzsteuer 2200} \quad \text{[MWST]$
 
 **Bar:** Kasse statt Ford/Verb aus LL.
 
@@ -87,7 +103,7 @@ Periodenende UMST: `Ertragskonto 8.1% / Umsatzsteuer`
 
 $\text{Umsatzsteuer} / \text{VST 1170} \quad \text{[Saldo]}$
 $\text{Umsatzsteuer} / \text{VST 1171} \quad \text{[Saldo]}$
-$\text{Umsatzsteuer} / \text{Bank oder Post} \quad \text{[Restschuld]}$
+$\text{Umsatzsteuer} / \text{Bank oder Post} \quad \text{[Restschuld]$
 
 ---
 
@@ -150,11 +166,11 @@ Mit Skonto: Netto−Skonto und MWST−Skonto direkt buchen.
 
 Offene Kundenrechnungen:
 $\text{Ford aus LL} / \text{Ertragskonto} \quad \text{[Netto]}$
-$\text{Ford aus LL} / \text{Umsatzsteuer} \quad \text{[MWST]}$
+$\text{Ford aus LL} / \text{Umsatzsteuer} \quad \text{[MWST]$
 
 Offene Lieferantenrechnungen:
 $\text{Aufwandkonto} / \text{Verb aus LL} \quad \text{[Netto]}$
-$\text{VST} / \text{Verb aus LL} \quad \text{[MWST]}$
+$\text{VST} / \text{Verb aus LL} \quad \text{[MWST]$
 
 Wiedereröffnung 01.01.: Umbuchungen umkehren.
 
@@ -165,45 +181,18 @@ Wiedereröffnung 01.01.: Umbuchungen umkehren.
 $\text{Verluste Ford} / \text{Ertragskonto} \quad \text{[Netto]}$
 Keine MWST-Korrektur (MWST wurde nie gebucht — vereinnahmtes Entgelt).
 
-##  Kontobezeichnungen & Abkürzungen
-
-| Abkürzung | Vollständig | Konto-Nr. |
-|---|---|---|
-| VST 1170 | Vorsteuer Material/Waren/DL/Energie | 1170 |
-| VST 1171 | Vorsteuer Investitionen/übriger Aufwand | 1171 |
-| UMST 2200 | Umsatzsteuer | 2200 |
-| Ford aus LL | Forderungen aus Lieferungen und Leistungen | 1100 |
-| Verb aus LL | Verbindlichkeiten aus Lieferungen und Leistungen | 2000 |
-| MaterialAu | Materialaufwand | KK4 |
-| WarenAu | Warenaufwand | KK4 |
-| WarenEr | Warenertrag | KK3 |
-| ProdER | Produktionserlöse | KK3 |
-| TransportEr | Transportertrag | KK3 |
-| HonorarEr | Honorarertrag | KK3 |
-| VerwAu / VerwaltungsAu | Verwaltungsaufwand | KK6 |
-| EnergieAu LeistErst | Energieaufwand zur Leistungserstellung | KK4 |
-| FahrzeugAu | Fahrzeugaufwand | KK6 |
-| RaumAu | Raumaufwand | KK6 |
-| FinanzAu | Finanzaufwand | KK6/8 |
-| SonstBetrAu | Sonstiger Betriebsaufwand | KK5-8 |
-| Kk und Dk | Kreditkarten und Debitkarten | 1045 |
-| Abschr | Abschreibungen | KK6 |
-| URE | Unterhalt und Reparaturen | KK6 |
-| WarenBest | Warenbestand | KK1 |
-| AU | Aufwand (generisch) | — |
-
-
 ---
 
 ## 15) Häufige Fehler
 
 1. ❌ MWST auf Versicherung/Zinsen/Löhne
 2. ❌ Brutto als Netto verwenden
-3. ❌ VST 1170 für AV-Kauf (→ 1171)
-4. ❌ Bei Offenposten Rechnung buchen (→ KB)
-5. ❌ VST bei Saldosteuersatz
-6. ❌ Saldosteuersatz auf Netto (→ Brutto)
-7. ❌ Rundung vergessen (→ 5 Rappen)
-8. ❌ Skonto nur auf Netto (→ Netto UND MWST)
-9. ❌ Berechnungen zeigen wenn nicht verlangt
-10. ❌ Text ausserhalb von $...$
+3. ❌ **2.6% falsch berechnen (÷1.026 statt ÷102.6)**
+4. ❌ VST 1170 für AV-Kauf (→ 1171)
+5. ❌ Bei Offenposten Rechnung buchen (→ KB)
+6. ❌ VST bei Saldosteuersatz
+7. ❌ Saldosteuersatz auf Netto (→ Brutto)
+8. ❌ Rundung vergessen (→ 5 Rappen)
+9. ❌ Skonto nur auf Netto (→ Netto UND MWST)
+10. ❌ Berechnungen zeigen wenn nicht verlangt
+11. ❌ Text ausserhalb von $...$
