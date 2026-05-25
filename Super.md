@@ -1,407 +1,526 @@
-# SUPER-MD — FRW PRÜFUNG KAP 4 (Mehrwertsteuer) + KAP 11 (Offenposten-Buchhaltung)
-# Buchungssätze: Schweizer Rechnungswesen (LaTeX-SAFE)
+# SUPER-MD — KAP 4 (MWST) & KAP 11 (Offenposten-Buchhaltung)
+# Finanzielle Rechnungslegung (FRW) — Buchungssätze & MWST-Logik
 
 ---
 
-## 0) Output-Style (LaTeX-SAFE)
+## 0) Output-Style (Buchungssatz-Format)
 
-Jede Ausgabelinie ist GENAU ein LaTeX-Block:
-- beginnt mit `$` und endet mit `$`
-- Nummerierung steht IN LaTeX: `\text{1) }`, `\text{2) }`, ...
-- Wörter/Hinweise IMMER in `\text{...}`
-- Kontonamen in `\text{...}` (z.B. `\text{MaterialAu}`)
-- Beträge als normale Zahlen mit Apostroph-Tausender: `6'761.75`
-- Hinweise am Ende als `\text{[| ...]}`
+Jede Lösung folgt diesem Template:
 
-### Beispiel-Output (Einkauf mit MWST Nettomethode)
+```
+Nr. Buchungssatz                              Betrag
+1   Soll-Konto / Haben-Konto                  XXXX.XX
+    Soll-Konto / Haben-Konto                  XXXX.XX
+```
 
-$\text{OCR: Kauf Rohmaterial CHF 4'924.80 inkl. 8.1\% auf Rg}$
-
-$\text{Buchungssatz 1}$
-
-$\text{1) MaterialAu / Verb aus LL 8.1\% Betrag: } 4'555.80$
-
-$\text{2) VST 1170 / Verb aus LL 8.1\% Betrag: } 369.00$
+- **Minimalistisch:** Kürzestmögliche Antwort, die noch vollständig ist.
+- **KB** = "Kein Buchungssatz" (wenn keine Buchung nötig ist).
+- Beträge IMMER auf **5 Rappen** runden.
+- Kontonummern nur wenn im Aufgabentext verlangt.
 
 ---
 
-## 1) MWST-Grundlagen (KAP 4)
+## 1) MWST-Steuersätze (Stand aktuell im Lehrbuch)
 
-### 1.1 Steuersätze
-- Normalsatz: **8.1%** (Kleider, Elektronik, Reparaturen, Alkohol, Benzin, Diesel, Handyabo, Elektrizität, Wasser)
-- Reduzierter Satz: **2.6%** (Lebensmittel, Medikamente, Zeitungen/Zeitschriften, Bücher, Wasser in Leitungen)
-- Sondersatz: **3.8%** (Beherbergung/Hotel inkl. Frühstück)
-- **0% befreit** (Exporte) → Vorsteuerabzug erlaubt
-- **Ausgenommen** (Versicherungen, Ärzte, Bildung, Kultur, Wohnungsvermietung) → KEIN Vorsteuerabzug
-
-### 1.2 Steuersubjekt & Steuerobjekt
-- Steuersubjekt: Unternehmen mit Jahresumsatz ≥ CHF 100'000 (steuerpflichtig)
-- Unter CHF 100'000: befreit, kann freiwillig versteuern
-- Sportvereine/gemeinnützige: Grenze CHF 250'000
-- Steuerobjekt: steuerbare Leistungen im Inland + Importe
-
-### 1.3 Vorsteuer & Umsatzsteuer
-- **Vorsteuer** = Guthaben gegenüber ESTV (bei Einkäufen bezahlt)
-  - Konto **1170**: Vorsteuer auf Material, Handelswaren, DL, Energie (Kontenklasse 4)
-  - Konto **1171**: Vorsteuer auf Investitionen + übriger Betriebsaufwand (Kontenklassen 1, 5–8)
-- **Umsatzsteuer** (Konto **2200**) = Schuld gegenüber ESTV (bei Verkäufen kassiert)
-- Abzuliefernde MWST = Umsatzsteuer − Vorsteuer (Normalfall: Schuld)
-
-### 1.4 MWST-Berechnung
-- Betrag exkl. MWST = 100%
-- Betrag inkl. MWST = 108.1% (bzw. 102.6% / 103.8%)
-- Von inkl. → exkl.: Betrag / 108.1 × 100
-- Von inkl. → MWST: Betrag / 108.1 × 8.1
-- Auf 5 Rappen runden
-
-### 1.5 MWST-konformer Beleg
-Pflichtangaben: Name+Ort Leistender, UID-Nr. + "MWST", Name+Ort Empfänger, Datum/Zeitraum, Art der Leistung, Entgelt, Steuersatz + Steuerbetrag.
-Ohne → kein Vorsteuerabzug.
-Ausnahme: Kassenzettel bis CHF 400 → Name Kunde nicht nötig.
+| Satz   | Rate   | Anwendung                                    |
+|--------|--------|----------------------------------------------|
+| Normal | 8.1%   | Standard (Waren, DL, Anlagevermögen)         |
+| Reduz. | 2.6%   | Nahrungsmittel, Bücher, Zeitungen, Medikamente |
+| Sonder | 3.8%   | Beherbergung (Hotels)                        |
 
 ---
 
-## 2) Abrechnungs- & Verbuchungsmethoden (KAP 4)
+## 2) MWST-Berechnungsformeln (KRITISCH — ANTI-FEHLER)
 
-### 2.1 Abrechnungsmethoden
-| Methode | Vorsteuerabzug | Abrechnung |
-|---|---|---|
-| **Effektive Methode** | JA (VST rückforderbar) | quartalsweise |
-| **Saldosteuersatz (SSS)** | NEIN | halbjährlich |
-
-### 2.2 Verbuchungsmethoden
-| Methode | Buchungen pro GF | MWST sichtbar |
-|---|---|---|
-| **Nettomethode** | 2 BS (Netto + MWST separat) | laufend |
-| **Bruttomethode** | 1 BS (Brutto inkl. MWST) | erst Ende Quartal |
-
-### 2.3 Abrechnungsarten
-- **Vereinbartes Entgelt**: Rechnungsdatum massgebend (Standard)
-- **Vereinnahmtes Entgelt**: Zahlungsdatum massgebend (bei Offenposten-Buchhaltung)
-
----
-
-## 3) Effektive Methode + Nettomethode — Buchungsregeln (KAP 4)
-
-### 3.1 Einkäufe (2 Buchungssätze)
-
-**Material/Waren auf Rechnung (Kontenklasse 4):**
+### Brutto → Netto & MWST:
 ```
-MaterialAu / Verb aus LL    [Nettobetrag]
-VST 1170 / Verb aus LL      [MWST-Betrag]
+Netto = Brutto / (100 + Rate) × 100
+MWST  = Brutto / (100 + Rate) × Rate
+```
+Beispiel: CHF 10 810 inkl. 8.1%
+→ Netto = 10 810 / 108.1 × 100 = 10 000
+→ MWST  = 10 810 / 108.1 × 8.1  = 810
+
+### Netto → MWST:
+```
+MWST = Netto × Rate / 100
 ```
 
-**Investitionen/übriger Aufwand auf Rechnung (Kontenklassen 1, 5–8):**
+### 5-Rappen-Rundung:
 ```
-Büromaschinen / Verb aus LL    [Nettobetrag]
-VST 1171 / Verb aus LL         [MWST-Betrag]
+Gerundet = ROUND(Betrag × 20) / 20
 ```
+Beispiel: 101.23 → 101.25 | 101.22 → 101.20
 
-**Bareinkauf Material:**
-```
-VerwaltungsAu / Kasse    [Nettobetrag]
-VST 1171 / Kasse         [MWST-Betrag]
-```
-
-### 3.2 Verkäufe (2 Buchungssätze)
-
-**Verkauf produzierte Güter auf Kredit:**
-```
-Ford aus LL / ProdER       [Nettobetrag]
-Ford aus LL / UMST 2200    [MWST-Betrag]
-```
-
-**Barverkauf:**
-```
-Kasse / ProdER         [Nettobetrag]
-Kasse / UMST 2200      [MWST-Betrag]
-```
-
-**Verkauf Anlagevermögen (z.B. Fahrzeug zum Buchwert):**
-```
-Kasse / Fahrzeuge      [Buchwert]
-Kasse / UMST 2200      [MWST auf Buchwert]
-```
-
-### 3.3 Minderungen (Rabatte, Skonti, Rücksendungen)
-**Regel: Umkehr der ursprünglichen Buchungssätze (2 BS)**
-
-**Lieferantenrabatt/-skonto (Einkaufsseite):**
-```
-Verb aus LL / MaterialAu     [Netto-Minderung]
-Verb aus LL / VST 1170       [MWST-Minderung]
-Verb aus LL / Bank           [Zahlbetrag]
-```
-
-**Kundenrabatt/-skonto (Verkaufsseite):**
-```
-ProdER / Ford aus LL         [Netto-Minderung]
-UMST 2200 / Ford aus LL      [MWST-Minderung]
-Bank / Ford aus LL            [Zahlbetrag]
-```
-
-### 3.4 Kreditkarten-/Debitkarten-Verkäufe
-```
-Kk und Dk / WarenEr         [Nettobetrag]
-Kk und Dk / UMST 2200       [MWST-Betrag]
-```
-Bei Gutschrift durch Kartengesellschaft:
-```
-Bank / Kk und Dk             [Gutschrift]
-FinanzAu / Kk und Dk         [Kommission]
-```
-**WICHTIG: Kommission berechtigt NICHT zur UMST-Reduktion!**
-
-### 3.5 Zahlung von Rechnungen (kein MWST-Effekt)
-```
-Verb aus LL / Bank           [Bruttobetrag]
-Bank / Ford aus LL           [Bruttobetrag]
-```
-
-### 3.6 Abrechnung MWST mit ESTV (Ende Quartal)
-```
-UMST 2200 / VST 1170        [Saldo VST 1170]
-UMST 2200 / VST 1171        [Saldo VST 1171]
-UMST 2200 / Bank (oder Post) [Restschuld]
-```
-→ Alle 3 Konten (VST 1170, VST 1171, UMST) haben danach Saldo 0.
-
-### 3.7 Von der MWST ausgenommene Leistungen
-- Versicherungsprämien, Miete Wohnungen → KEIN VST/UMST
-- Buchung nur 1 BS: z.B. `FahrzeugAu / Verb aus LL [Brutto = Netto]`
+⚠️ **NIEMALS** den Bruttobetrag direkt als MWST-Basis verwenden!
+⚠️ **IMMER** zuerst Netto berechnen, dann MWST daraus ableiten.
 
 ---
 
-## 4) Effektive Methode + Bruttomethode (KAP 4)
+## 3) Vorsteuer-Kontenzuordnung
 
-### 4.1 Während Quartal
-- Alles inkl. MWST in EINEM Buchungssatz:
-```
-WarenAu 8.1% / Verb aus LL    [Bruttobetrag]
-Ford aus LL / WarenEr 8.1%     [Bruttobetrag]
-```
-- Separate Konten nach Steuersatz (z.B. WarenEr 8.1%, WarenEr 2.6%)
-
-### 4.2 Ende Quartal: Bereinigung
-- Vorsteuer aus Aufwandkonten extrahieren:
-```
-VST 1170 / BetriebsAu 8.1%    [VST-Betrag aus KK4]
-VST 1171 / BetriebsAu 8.1%    [VST-Betrag aus KK1,5-8]
-```
-- Umsatzsteuer aus Ertragskonten extrahieren:
-```
-ProdER 8.1% / UMST 2200       [UMST-Betrag]
-```
-- Dann normale Abrechnung wie bei Nettomethode (3.6)
-
-### 4.3 Berechnung VST aus Bruttokonto
-- Bruttobetrag / 108.1 × 8.1 = Vorsteuer
-- Aufteilen: KK4-Anteil → VST 1170, Rest → VST 1171
+| Konto      | Zuordnung                                          |
+|------------|-----------------------------------------------------|
+| **VST 1170** | Materialaufwand, Warenaufwand, Energieaufwand (KK 4) |
+| **VST 1171** | Sonstiger BetriebsAu (KK 5–8), Anlagevermögen-Käufe |
+| **UMST 2200** | Umsatzsteuer auf Verkäufe / Erträge                |
 
 ---
 
-## 5) Saldosteuersatzmethode (SSS) — KAP 4
+## 4) Quick Router — KAP 4 Methoden
 
-### 5.1 Merkmale
-- Kein Vorsteuerabzug
-- Saldosteuersatz < normaler Satz (z.B. 2.1%, 3.7%, 5.3%)
-- Bruttoumsatz = 100% für SSS-Berechnung
-- Halbjährliche Abrechnung
-- Max. Jahresumsatz CHF 5'024'000 / max. Steuerlast CHF 108'000
+### A) Effektive Methode + Nettomethode (Standard)
 
-### 5.2 Verbuchung (Bruttomethode, Standard bei SSS)
-Während Semester: 1 Buchungssatz (Brutto)
+**Einkauf auf Rechnung (inkl. MWST):**
 ```
-Ford aus LL / ProdER    [Bruttobetrag inkl. 8.1%]
-```
-Ende Semester:
-```
-ProdER / UMST 2200      [Bruttoumsatz × SSS]
-UMST 2200 / Post        [Zahlung an ESTV]
+Aufwandkonto / Verb aus LL       [Nettobetrag]
+VST 1170 oder 1171 / Verb aus LL [MWST-Betrag]
 ```
 
-### 5.3 Auf Kundenbeleg
-- Normaler Satz (8.1%) sichtbar → Kunde kann VST abziehen
-- SSS ist intern, Kunde sieht ihn nicht
+**Verkauf auf Rechnung (inkl. MWST):**
+```
+Ford aus LL / Ertragskonto       [Nettobetrag]
+Ford aus LL / Umsatzsteuer 2200  [MWST-Betrag]
+```
+
+**Barkauf (inkl. MWST):**
+```
+Aufwandkonto / Kasse             [Nettobetrag]
+VST 1170 oder 1171 / Kasse      [MWST-Betrag]
+```
+
+**Barverkauf (inkl. MWST):**
+```
+Kasse / Ertragskonto             [Nettobetrag]
+Kasse / Umsatzsteuer 2200       [MWST-Betrag]
+```
+
+### B) Effektive Methode + Bruttomethode
+
+**Einkauf:**
+```
+Aufwandkonto 8.1% / Verb aus LL  [Bruttobetrag]
+```
+
+**Verkauf:**
+```
+Ford aus LL / Ertragskonto 8.1%  [Bruttobetrag]
+```
+
+**Periodenende — VST ausbuchen:**
+```
+VST 1170 / Aufwandkonto 8.1%     [VST KK4]
+VST 1171 / Aufwandkonto 8.1%     [VST KK5-8 + AV]
+```
+
+**Periodenende — UMST ausbuchen:**
+```
+Ertragskonto 8.1% / Umsatzsteuer [UMST-Betrag]
+```
+
+### C) Saldosteuersatzmethode (+ Bruttomethode)
+
+- Keine separate VST-Buchung
+- Keine VST-Rückforderung
+- Abrechnung: halbjährlich (nicht quartalsweise)
+
+**Periodenende:**
+```
+Ertragskonto / Umsatzsteuer      [Saldosteuersatz × Umsatz]
+Umsatzsteuer / Bank              [gleicher Betrag]
+```
+
+⚠️ Bei Saldosteuersatz: Umsatz = Saldo Ertragskonto (100%), NICHT 108.1%!
+→ Formel: Saldosteuersatz × (Saldo Ertragskonto nach Abzügen)
 
 ---
 
-## 6) Offenposten-Buchhaltung (KAP 11)
+## 5) MWST-Abrechnung mit ESTV (Effektive Methode)
 
-### 6.1 Grundprinzip
-- Rechnungen werden NICHT verbucht (weder Ein- noch Ausgangsrechnungen)
-- Nur ZAHLUNGEN werden verbucht (anhand Zahlungsbeleg: Bank/Post/Kasse)
-- Konten Ford aus LL und Verb aus LL: während Jahr = 0
-- Eignung: kleine(re) Unternehmen
-- Skonti, Rabatte, Rücksendungen: werden NICHT verbucht → "Kein Buchungssatz" / "KB"
-
-### 6.2 Während des Jahres (nur Zahlungen buchen)
-
-**Kundenzahlung eingeht:**
 ```
-Bank / WarenEr (oder TransportEr, ProdER)    [Zahlbetrag]
-```
-→ Bei Skonto: nur der tatsächlich erhaltene Betrag wird als Ertrag gebucht.
-
-**Lieferantenrechnung wird bezahlt:**
-```
-WarenAu / Bank    [Zahlbetrag]
-Fahrzeuge / Bank  [Zahlbetrag]
-VerwAu / Bank     [Zahlbetrag]
+Umsatzsteuer / VST 1170          [Saldo VST 1170]
+Umsatzsteuer / VST 1171          [Saldo VST 1171]
+Umsatzsteuer / Bank oder Post    [Restschuld]
 ```
 
-**Barverkauf:**
+Restschuld = Saldo UMST − Saldo VST 1170 − Saldo VST 1171
+
+Falls Guthaben (VST > UMST): ESTV überweist → `Bank / Umsatzsteuer`
+
+---
+
+## 6) Rücksendungen, Rabatte, Skonti MIT MWST
+
+### Grundregel (Nettomethode):
+> Die zwei Buchungssätze der Rechnung werden **umgekehrt** (Soll↔Haben).
+
+**Kundenrabatt/-skonto (vorher Rechnung verbucht):**
 ```
-Kasse / WarenEr    [Barbetrag]
+Ertragskonto / Ford aus LL       [Netto-Reduktion]
+Umsatzsteuer / Ford aus LL       [MWST-Reduktion]
 ```
 
-**NICHT verbucht (= KB):**
-- Ausgestellte Kundenrechnungen
-- Eingehende Lieferantenrechnungen
-- Rabatte/Skonti/Rücksendungen (solange keine Zahlung)
-
-### 6.3 Abschluss (31.12.) — Offene Rechnungen verbuchen
-
-**Offene Kundenrechnungen:**
+**Lieferantenrabatt/-skonto (vorher Rechnung verbucht):**
 ```
-Ford aus LL / WarenEr (o. ProdER, TransportEr, HonorarEr)    [Betrag]
+Verb aus LL / Aufwandkonto       [Netto-Reduktion]
+Verb aus LL / VST 1170 oder 1171 [MWST-Reduktion]
 ```
 
-**Offene Lieferantenrechnungen:**
+**Zahlung nach Skonto (Kunde zahlt Restschuld):**
 ```
-WarenAu / Verb aus LL           [Betrag für Waren]
-MaterialAu / Verb aus LL        [Betrag für Material]
-Fahrzeuge / Verb aus LL          [Betrag für Fahrzeuge]
-VerwAu / Verb aus LL             [Betrag für Verwaltung]
-EnergieAu LeistErst / Verb aus LL  [Betrag für Energie]
+Ertragskonto / Ford aus LL       [Skonto Netto]
+Umsatzsteuer / Ford aus LL       [Skonto MWST]
+Bank / Ford aus LL               [Zahlbetrag]
 ```
 
-**Abschreibungen (gleich wie bei normaler Methode):**
+**Zahlung nach Skonto (wir zahlen Lieferant):**
 ```
-Abschr / Fahrzeuge    [Betrag]
-```
-
-**Warenbestandsänderung (ohne laufende Inventur):**
-```
-WarenAu / WarenBest    [Bestandsabnahme]
-WarenBest / WarenAu    [Bestandszunahme]
+Verb aus LL / Aufwandkonto       [Skonto Netto]
+Verb aus LL / VST 1170/1171      [Skonto MWST]
+Verb aus LL / Bank               [Zahlbetrag]
 ```
 
-### 6.4 Wiedereröffnung (01.01.) — Rückbuchung
+### Grundregel (Bruttomethode):
+> Nur EIN Buchungssatz (Bruttobetrag), keine separate MWST-Korrektur.
 
-**Rückbuchung = Umkehr der Abschlussbuchungen:**
+---
 
-Offene Kundenrechnungen:
-```
-WarenEr / Ford aus LL    [Betrag]
-```
+## 7) MWST-Ausnahmen (KRITISCH)
 
-Offene Lieferantenrechnungen:
-```
-Verb aus LL / WarenAu           [Betrag]
-Verb aus LL / Fahrzeuge          [Betrag]
-Verb aus LL / VerwAu             [Betrag]
-Verb aus LL / EnergieAu LeistErst  [Betrag]
-```
-→ Danach: Ford aus LL = 0, Verb aus LL = 0
+| Typ                  | UMST? | VST-Abzug? | Beispiele                                   |
+|----------------------|-------|------------|----------------------------------------------|
+| **Ausgenommen** (Art. 21) | Nein  | Nein       | Versicherungen, Miete Wohnungen, Zinsen, Ärzte, Bildung |
+| **Befreit** (Art. 23)     | Nein  | **Ja**     | Exporte, Lieferungen ins Ausland             |
 
-### 6.5 Bezahlung der vorjährig offenen Rechnungen (nach Rückbuchung)
-- Wird wie normaler Zahlungsvorgang gebucht:
-```
-Bank / WarenEr (o. TransportEr)    [Kundenzahlung]
-WarenAu / Bank                      [Lieferantenzahlung]
-Fahrzeuge / Bank                     [Fahrzeugzahlung]
-```
+→ Versicherungsprämien: **kein VST, kein UMST** → einfach `Aufwandkonto / Verb aus LL` (Bruttobetrag)
+→ Zinsen, Bankspesen: **ausgenommen** → `Finanzaufwand / Bank`
+→ Exporte: **kein UMST**, aber VST auf Einkäufe abziehbar
+→ Löhne: **kein MWST-Bezug** → `Lohnaufwand / Bank`
 
-### 6.6 Forderungsverlust bei Offenposten
-- Nur Nettobetrag (exkl. MWST) verbuchen, da Rechnung + UMST nie gebucht wurden:
-```
-Verluste Ford / ProdER (o. TransportEr)    [Nettobetrag]
-```
+---
 
-### 6.7 Offenposten + MWST (Effektive Methode, Nettomethode, vereinnahmtes Entgelt)
+## 8) Verkauf/Kauf von Anlagevermögen MIT MWST
 
-**Während Jahr — Zahlungen mit MWST (2 BS):**
+**Verkauf AV (Nettomethode):**
 ```
-Bank / TransportEr       [Nettobetrag]
-Bank / UMST 2200         [MWST-Betrag]
+Kasse/Bank/Ford LL / AV-Konto        [Buchwert oder Netto-Verkaufspreis]
+Kasse/Bank/Ford LL / Umsatzsteuer    [MWST auf Verkaufspreis]
 ```
-```
-EnergieAu LeistErst / Bank    [Nettobetrag]
-VST 1170 / Bank                [MWST-Betrag]
-```
+→ Falls Verkaufspreis > Buchwert: Differenz = a.o. Ertrag
+→ Falls Verkaufspreis < Buchwert: Differenz = a.o. Aufwand
 
-**Abschluss — Offene Rechnungen mit MWST:**
+**Kauf AV (Nettomethode):**
 ```
-Ford aus LL / TransportEr    [Nettobetrag]
-Ford aus LL / UMST 2200      [MWST-Betrag]
-```
-```
-EnergieAu LeistErst / Verb aus LL    [Nettobetrag]
-VST 1170 / Verb aus LL               [MWST-Betrag]
-```
-
-**Rückbuchung (01.01.):**
-```
-TransportEr / Ford aus LL    [Nettobetrag]
-UMST 2200 / Ford aus LL      [MWST-Betrag]
-```
-
-**MWST-Abrechnung mit ESTV:**
-```
-UMST 2200 / VST 1170    [Saldo]
-UMST 2200 / VST 1171    [Saldo]
-UMST 2200 / Bank         [Restschuld]
+AV-Konto / Kasse/Bank/Verb LL        [Nettobetrag]
+VST 1171 / Kasse/Bank/Verb LL        [MWST-Betrag]
 ```
 
 ---
 
-## 7) Kontobezeichnungen & Abkürzungen
+## 9) Kreditkarten mit MWST
 
-| Abkürzung | Vollständig | Konto-Nr. |
-|---|---|---|
-| VST 1170 | Vorsteuer Material/Waren/DL/Energie | 1170 |
-| VST 1171 | Vorsteuer Investitionen/übriger Aufwand | 1171 |
-| UMST 2200 | Umsatzsteuer | 2200 |
-| Ford aus LL | Forderungen aus Lieferungen und Leistungen | 1100 |
-| Verb aus LL | Verbindlichkeiten aus Lieferungen und Leistungen | 2000 |
-| MaterialAu | Materialaufwand | KK4 |
-| WarenAu | Warenaufwand | KK4 |
-| WarenEr | Warenertrag | KK3 |
-| ProdER | Produktionserlöse | KK3 |
-| TransportEr | Transportertrag | KK3 |
-| HonorarEr | Honorarertrag | KK3 |
-| VerwAu / VerwaltungsAu | Verwaltungsaufwand | KK6 |
-| EnergieAu LeistErst | Energieaufwand zur Leistungserstellung | KK4 |
-| FahrzeugAu | Fahrzeugaufwand | KK6 |
-| RaumAu | Raumaufwand | KK6 |
-| FinanzAu | Finanzaufwand | KK6/8 |
-| SonstBetrAu | Sonstiger Betriebsaufwand | KK5-8 |
-| Kk und Dk | Kreditkarten und Debitkarten | 1045 |
-| Abschr | Abschreibungen | KK6 |
-| URE | Unterhalt und Reparaturen | KK6 |
-| WarenBest | Warenbestand | KK1 |
-| AU | Aufwand (generisch) | — |
+**Tageseinnahmen verbuchen:**
+```
+Kk und Dk / Ertragskonto             [Nettobetrag]
+Kk und Dk / Umsatzsteuer             [MWST-Betrag]
+```
+
+**Gutschrift von KK-Gesellschaft (mit Kommission):**
+```
+Bank / Kk und Dk                     [Gutschrift]
+Finanzaufwand / Kk und Dk            [Kommission]
+```
 
 ---
 
-## 8) Häufige Fehler (Fallen)
+## 10) Verrechnungssteuer (VST 35%)
 
-1. **VST 1170 vs. 1171 verwechselt** → 1170 = Kontenklasse 4 (Material, Waren, Energie LeistErst), 1171 = alles andere
-2. **Versicherungen mit MWST gebucht** → Versicherungen sind AUSGENOMMEN → kein VST/UMST
-3. **Miete Wohnung mit MWST** → ausgenommen. Aber: Miete Büro kann optiert werden.
-4. **Bei Offenposten: Rechnung verbucht** → FALSCH. Nur Zahlung buchen. Rechnung = KB.
-5. **Skonto bei Offenposten verbucht** → FALSCH. Skonto = KB. Nur Zahlbetrag buchen.
-6. **Forderungsverlust bei Offenposten mit MWST** → FALSCH. Nur Nettobetrag, da UMST nie gebucht.
-7. **Rückbuchung vergessen** → Am 01.01. MÜSSEN alle Abschlussbuchungen umgekehrt werden.
-8. **Kreditkarten-Kommission als UMST-Minderung** → FALSCH. Kommission ≠ Skonto.
-9. **Bruttomethode: VST/UMST während Quartal buchen** → FALSCH. Erst Ende Quartal bereinigen.
-10. **SSS: Vorsteuer zurückfordern** → FALSCH. Bei SSS gibt es KEINEN Vorsteuerabzug.
+```
+Bank / Finanzertrag                  [Habenzins brutto]
+Finanzaufwand / Bank                 [Sollzins]
+Guthaben VST / Bank                  [35% vom Habenzins]
+Finanzaufwand / Bank                 [Spesen]
+```
 
 ---
 
-## 9) Safe-Mode Logik
+# ═══════════════════════════════════════════
+# KAP 11 — OFFENPOSTEN-BUCHHALTUNG
+# ═══════════════════════════════════════════
 
-- **1 Aufgabe sichtbar** → komplett lösen (alle Teilaufgaben)
-- **Mehrere Aufgaben sichtbar** → nur die ERSTE lösen, Rest ignorieren
-- **Markierte Aufgabe** → nur diese lösen
+## 11) Kernregel Offenposten
+
+> **Rechnungen werden NICHT bei Erhalt/Versand gebucht, sondern NUR bei Zahlung.**
+
+- Eingangsrechnung erhalten → **KB** (Kein Buchungssatz) — Rechnung wird abgelegt
+- Ausgangsrechnung versendet → **KB** (Kein Buchungssatz) — Rechnung wird abgelegt
+- Erst bei **Zahlung** wird gebucht
+
+---
+
+## 12) Buchung bei Zahlung (Offenposten + Nettomethode)
+
+### Kundenzahlung erhalten:
+```
+Bank / Ertragskonto                  [Nettobetrag]
+Bank / Umsatzsteuer                  [MWST-Betrag]
+```
+
+### Lieferantenzahlung geleistet:
+```
+Aufwandkonto / Bank                  [Nettobetrag]
+VST 1170 oder 1171 / Bank           [MWST-Betrag]
+```
+
+### Kundenzahlung MIT Skonto (Offenposten):
+Skonto wird direkt bei Zahlung berücksichtigt — kein vorheriger Rechnungsbuchungssatz existiert!
+```
+Bank / Ertragskonto                  [Netto − Skonto-Netto]
+Bank / Umsatzsteuer                  [MWST − Skonto-MWST]
+```
+
+### Lieferantenzahlung MIT Skonto (Offenposten):
+```
+Aufwandkonto / Bank                  [Netto − Skonto-Netto]
+VST 1170/1171 / Bank                 [MWST − Skonto-MWST]
+```
+
+---
+
+## 13) Offenposten + Bruttomethode (Saldosteuersatz)
+
+### Kundenzahlung:
+```
+Bank / Ertragskonto                  [Bruttobetrag]
+```
+
+### Lieferantenzahlung:
+```
+Aufwandkonto / Bank                  [Bruttobetrag]
+```
+
+---
+
+## 14) Jahresabschluss — Offene Posten umbuchen
+
+Am **31.12.** müssen noch offene Rechnungen erfasst werden:
+
+### Offene Kundenrechnungen (Nettomethode):
+```
+Ford aus LL / Ertragskonto           [Nettobetrag]
+Ford aus LL / Umsatzsteuer           [MWST-Betrag]
+```
+
+### Offene Lieferantenrechnungen (Nettomethode):
+```
+Aufwandkonto / Verb aus LL           [Nettobetrag]
+VST 1170/1171 / Verb aus LL          [MWST-Betrag]
+```
+
+### Offene Kundenrechnungen (Bruttomethode/Saldosteuersatz):
+```
+Ford aus LL / Ertragskonto           [Bruttobetrag]
+```
+
+### Offene Lieferantenrechnungen (Bruttomethode):
+```
+Aufwandkonto / Verb aus LL           [Bruttobetrag]
+```
+
+### Wiedereröffnung 01.01. (Rückbuchung):
+Die Jahresabschlussbuchungen werden **umgekehrt** (Soll↔Haben).
+
+---
+
+## 15) Forderungsverlust bei Offenposten
+
+Da bei Offenposten keine Rechnung gebucht wurde, gibt es keinen Ford-aus-LL-Saldo.
+→ Verlust wird direkt gegen Ertrag gebucht:
+
+```
+Verluste Ford / Ertragskonto        [Nettobetrag]
+```
+
+⚠️ Keine MWST-Korrektur nötig, da MWST nie gebucht wurde (vereinnahmtes Entgelt).
+
+Ausnahme: Wenn die Rechnung bereits bezahlt und MWST gebucht wurde:
+```
+Verluste Ford / Ertragskonto        [Nettobetrag]
+Umsatzsteuer / Ertragskonto         [MWST-Betrag]  ← MWST-Korrektur
+```
+
+---
+
+## 16) Vereinnahmtes vs. Vereinbartes Entgelt
+
+| Kriterium              | Vereinbartes Entgelt                    | Vereinnahmtes Entgelt                 |
+|------------------------|------------------------------------------|---------------------------------------|
+| MWST-Zeitpunkt         | Bei Rechnungsstellung                    | Bei Zahlung                           |
+| Typische Methode       | Laufende Verbuchung der Rechnungen       | Offenposten-Buchhaltung               |
+| VST abziehbar ab       | Rechnungsdatum                           | Zahlungsdatum                         |
+| UMST geschuldet ab     | Rechnungsdatum                           | Zahlungsdatum                         |
+
+---
+
+## 17) Offenposten + Bankkontoauszug (Gesamtaufgaben)
+
+### Workflow:
+1. Bankkontoauszug lesen → jede Zeile = ein Geschäftsfall
+2. Für jede Zeile prüfen:
+   - Ist MWST relevant? → Netto/MWST aufsplitten
+   - Ist es MWST-ausgenommen? (Versicherung, Miete Wohnung, Zinsen) → kein VST/UMST
+   - Welches VST-Konto? (1170 für KK4, 1171 für KK5-8 + AV)
+3. Buchungssatz formulieren
+4. Bei Skonto/Rabatt: Reduktion korrekt auf Netto UND MWST aufteilen
+
+---
+
+## 18) Gemischte Aufgaben — Entscheidungsbaum
+
+```
+Geschäftsfall erhalten
+│
+├── Rechnung erhalten/versendet?
+│   ├── Offenposten-Methode → KB
+│   └── Laufende Methode → Buchen (Netto oder Brutto)
+│
+├── Zahlung geleistet/erhalten?
+│   ├── MWST-pflichtig?
+│   │   ├── Ja → Netto + MWST aufsplitten
+│   │   └── Nein (ausgenommen) → Bruttobetrag direkt
+│   ├── Skonto/Rabatt?
+│   │   ├── Ja → Reduktion auf Netto UND MWST
+│   │   └── Nein → Voller Betrag
+│   └── Buchen via Bank/Post/Kasse
+│
+├── MWST-Abrechnung?
+│   ├── Effektiv → UMST / VST 1170 + VST 1171 + Rest Bank
+│   └── Saldosteuersatz → Ertrag / UMST + UMST / Bank
+│
+└── Jahresabschluss?
+    └── Offene Rechnungen → Ford LL / Ertrag + VST/UMST
+```
+
+---
+
+## 19) Gelöste Musterbeispiele
+
+### Beispiel A: Nettomethode — Einkauf + Zahlung mit Skonto
+
+Rechnung CHF 10 810 (inkl. 8.1%) auf Rechnung, Zahlung mit 2% Skonto per Bank.
+
+**Rechnung:**
+```
+Warenaufwand / Verb aus LL           10 000.00
+VST 1170 / Verb aus LL                 810.00
+```
+
+**Zahlung mit 2% Skonto:**
+```
+Verb aus LL / Warenaufwand              200.00   (2% von 10 000)
+Verb aus LL / VST 1170                   16.20   (2% von 810)
+Verb aus LL / Bank                   10 593.80
+```
+
+### Beispiel B: Nettomethode — Verkauf + Rabatt + Skonto
+
+Verkauf CHF 30 808.50 (inkl. 8.1%) auf Rechnung.
+Dann 10% Rabatt, dann Zahlung mit 2% Skonto.
+
+**Rechnung:**
+```
+Ford aus LL / Produktionserlöse      28 500.00
+Ford aus LL / Umsatzsteuer            2 308.50
+```
+
+**10% Rabatt:**
+```
+Produktionserlöse / Ford aus LL       2 850.00
+Umsatzsteuer / Ford aus LL             230.85
+```
+
+**Zahlung mit 2% Skonto auf Restschuld (27 727.65):**
+```
+Produktionserlöse / Ford aus LL         513.00   (2% von 25 650)
+Umsatzsteuer / Ford aus LL              41.55   (2% von 2 077.65)
+Bank / Ford aus LL                   27 173.10
+```
+
+### Beispiel C: Offenposten — Rechnung + Zahlung
+
+Kundenrechnung CHF 6 756.25 (inkl. 8.1%) versendet. Zahlung mit 2% Skonto.
+
+**Rechnung versendet:** KB
+
+**Kundenzahlung mit 2% Skonto:**
+```
+Bank / Transportertrag                6 121.10   (= 6 250 − 125 − 4.90 Rundung)
+Bank / Umsatzsteuer                     496.10   (= 506.25 − 10.15)
+```
+→ Netto 6 250, MWST 506.25, Skonto 2%: Netto−125, MWST−10.15
+
+### Beispiel D: Offenposten — Jahresabschluss
+
+Offene Kundenrechnungen am 31.12.: CHF 64 860 (inkl. 8.1%)
+
+```
+Ford aus LL / Ertragskonto           60 000.00
+Ford aus LL / Umsatzsteuer            4 860.00
+```
+
+Offene Lieferantenrechnungen: CHF 4 324 (inkl. 8.1%)
+```
+Aufwandkonto / Verb aus LL            4 000.00
+VST 1170 / Verb aus LL                  324.00
+```
+
+### Beispiel E: Saldosteuersatzmethode
+
+Honorarertrag CHF 138 000 (inkl. 8.1%), Saldosteuersatz 6.2%.
+
+```
+Honorarertrag / Umsatzsteuer          8 556.00   (= 6.2% × 138 000)
+Umsatzsteuer / Bank                    8 556.00
+```
+
+⚠️ Bei Saldosteuersatz: Basis = Brutto-Ertrag (100%), NICHT Netto!
+
+### Beispiel F: Bruttomethode — Periodenende
+
+Konten vor Bereinigung:
+- Materialaufwand 8.1%: Saldo 90 240
+- Sonst. BetriebsAu 8.1%: Saldo 35 560
+- Produktionserlöse 8.1%: Saldo 287 720
+
+**VST ausbuchen:**
+```
+VST 1170 / Materialaufwand 8.1%       6 761.75   (90 240 / 108.1 × 8.1)
+VST 1171 / Sonst. BetriebsAu 8.1%     2 673.50   (35 560 / 108.1 × 8.1 — Rundung prüfen)
+```
+
+**UMST ausbuchen:**
+```
+Produktionserlöse 8.1% / Umsatzsteuer 21 559.05   (287 720 / 108.1 × 8.1)
+```
+
+**Abrechnung:**
+```
+Umsatzsteuer / VST 1170                6 761.75
+Umsatzsteuer / VST 1171                2 673.50
+Umsatzsteuer / Bank                   12 123.80
+```
+
+---
+
+## 20) Häufige Fehler (ANTI-FEHLER-LISTE)
+
+1. ❌ MWST auf Versicherungsprämien berechnen → Versicherungen sind **ausgenommen**
+2. ❌ MWST auf Löhne berechnen → Löhne haben **keinen MWST-Bezug**
+3. ❌ MWST auf Zinsen/Bankspesen → **ausgenommen**
+4. ❌ Bruttobetrag als Netto verwenden → **IMMER zuerst Brutto → Netto umrechnen**
+5. ❌ VST 1170 für AV-Kauf verwenden → AV-Käufe gehen auf **VST 1171**
+6. ❌ Bei Offenposten die Rechnung buchen → **KB!** Nur bei Zahlung buchen
+7. ❌ Bei Saldosteuersatz VST separat buchen → **Keine VST bei Saldosteuersatz**
+8. ❌ Saldosteuersatz auf Netto (exkl.) anwenden → Basis ist **Brutto (inkl. MWST)**
+9. ❌ Rundung vergessen → **IMMER auf 5 Rappen runden**
+10. ❌ Skonto nur auf Netto, nicht auf MWST → Skonto gilt auf **Netto UND MWST**
