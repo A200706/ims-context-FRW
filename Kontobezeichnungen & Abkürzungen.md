@@ -1,4 +1,4 @@
-## 7) Kontobezeichnungen & Abkürzungen
+##  Kontobezeichnungen & Abkürzungen
 
 | Abkürzung | Vollständig | Konto-Nr. |
 |---|---|---|
